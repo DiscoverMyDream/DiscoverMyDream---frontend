@@ -4,7 +4,8 @@ import NavDash from './NavDash';
 import {
     Container, Col, Form,
     FormGroup, Label, Input,
-    Button,
+    Button, Modal, ModalFooter,
+    ModalHeader, ModalBody,
     FormFeedback,Spinner,UncontrolledAlert,Alert
   } from 'reactstrap';
 
@@ -17,6 +18,9 @@ const RankPredictForm = () => {
         Marks:false
     }
     })
+    const [modal, setModal] = React.useState(false);
+  
+    const toggle = () => setModal(!modal);
     const handleInputChange =(event) =>{
   
         const target = event.target;
@@ -100,8 +104,28 @@ const RankPredictForm = () => {
               </Form>
               <br/><br/>
               < div  className="rowL">
-    <button style={{width:'50%'}}>Predict Now</button>
+    <button style={{width:'50%'}} onClick={toggle}>Predict Now</button>
   </div>
+
+  <Modal isOpen={modal} toggle={toggle}>
+                <ModalHeader 
+                    toggle={toggle}><h2>{initialState.SelectedExam} Predictor</h2></ModalHeader>
+                <ModalBody style={{alignItems:'center',alignSelf:'center',textAlign:'center'}}>
+                   
+                    <img src='/assets/images/scholar.png'
+              style={{maxHeight:'100%',width:'200px',height:'200px',display:'block',margin:'auto'}} /> 
+              
+                   <br/><br/>
+                    <h2 style={{alignSelf:'center'}}>
+                    Predicted {initialState.SelectedExam} Rank is <br/><strong style={{alignContent:'center'}}> ~1500</strong>
+                    <br/><br/>
+                    {initialState.SelectedExam=='JEE Mains'? <span>Approximate Percentile is<br/><strong style={{alignContent:'center'}}> ~99.2235</strong></span>:<span></span>}
+                    </h2>
+                </ModalBody>
+                <ModalFooter style={{alignItems:'center'}} className='justify-content-center'>
+                    <Button color="primary" onClick={toggle}>Use Again</Button>
+                </ModalFooter>
+            </Modal>
               <br/><br/>
             </div>
             </div>

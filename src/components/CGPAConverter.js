@@ -16,7 +16,7 @@ const CGPAConverter = () => {
                 <div className='col-md-5'>
                     <h4>
                 Enter CGPA(Max 10)    &nbsp;  &nbsp;  &nbsp;  &nbsp; 
-                <input type="number" step='0.01' required max='10' min='1' style={{border:0, borderBottom: '1px dotted', background: 'transparent'}}></input>
+                <input type="number" required max='10' min='1' style={{border:0, borderBottom: '1px dotted', background: 'transparent'}}></input>
                 </h4>
                 </div>
                 <div class="col-md-2 text-center">
