@@ -7,6 +7,7 @@ import { Route, Switch, Redirect } from 'react-router';
 import SLoginForm from './StudentLoginComponent';
 import StudentRegisterComponent from './StudentRegisterComponent';
 import RankPredictForm from './RankPredictForm';
+import CollegePrediction from './CollegePrediction';
 
 const MainComponent = () => {
     return (
@@ -44,6 +45,10 @@ const MainComponent = () => {
             </Route>
             <Route path='/rankPrediction'>
                 <RankPredictForm/>
+                <Footer/>
+            </Route>
+            <Route path='/collegePrediction'>
+                <CollegePrediction/>
                 <Footer/>
             </Route>
             </Switch>

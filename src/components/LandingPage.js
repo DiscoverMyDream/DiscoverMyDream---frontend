@@ -9,7 +9,7 @@ const LandingPage = () => {
                     <p style={{fontFamily:'Andada Pro'}}>
                    <span className='blink'> <strong>Interested in studying abroad?</strong></span><br/><br/> Appeared for any SAT/GRE or GMAT exam..<br/><br/> Check your eligiblity in your dream college here.<br/><br/> (CGPA to GPA conversion tool provided)<br/><br/>
                     </p>
-                    <Button color='warning' style={{fontSize:'1.8rem',borderRadius:'50px 10px',fontFamily:'Andada Pro'}}>Check Eligibility</Button>
+                    <Button color='warning' style={{fontSize:'1.8rem',borderRadius:'50px 10px',fontFamily:'Andada Pro'}}><a href='/collegePrediction'> Check Eligibility</a></Button>
                </div>
                <div className='col-sm-4 border border-2' style={{paddingLeft:'2vw',borderRadius:'50px 10px',borderColor:'green',backgroundColor:'#FFFFFF'}}>
                     <p style={{fontFamily:'Andada Pro'}}>
