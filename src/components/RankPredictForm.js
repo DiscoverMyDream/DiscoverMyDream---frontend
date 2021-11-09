@@ -37,6 +37,7 @@ const RankPredictForm = () => {
       }
     const handleSubmit = (event) => {
     event.preventDefault();
+    toggle();
     //alert("EmailId: " +initialState.EmailId)
     }
     return (
@@ -91,8 +92,7 @@ const RankPredictForm = () => {
               <Label >Category</Label>
               <Col sm={6}>
           <Input type="select" name="Category" required onChange={handleInputChange} className='minimal'>
-            <option>Open</option>
-            <option>EWS</option>
+            <option>OPEN</option>
             <option>OBC-NCL</option>
             <option>SC</option>
             <option>ST</option>
@@ -101,12 +101,12 @@ const RankPredictForm = () => {
         </Col>
               </FormGroup>
               
-              </Form>
+              
               <br/><br/>
               < div  className="rowL">
-    <button style={{width:'50%'}} onClick={toggle}>Predict Now</button>
+    <button type='submit' style={{width:'50%'}}>Predict Now</button>
   </div>
-
+  </Form>
   <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader 
                     toggle={toggle}><h2>{initialState.SelectedExam} Predictor</h2></ModalHeader>
@@ -129,6 +129,9 @@ const RankPredictForm = () => {
               <br/><br/>
             </div>
             </div>
+            <Alert color="info">
+        Try  <a href="/collegePrediction" className="alert-link">SAT/GMAT College Predictor</a>. Give it a click if you like.
+      </Alert>
             </div>
 
         </div>

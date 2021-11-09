@@ -1,5 +1,5 @@
 import React from 'react';
-import { Jumbotron } from 'reactstrap';
+import { Jumbotron,Alert } from 'reactstrap';
 import CGPAConverter from './CGPAConverter';
 import NavDash from './NavDash';
 
@@ -14,13 +14,16 @@ const CollegePrediction = () => {
                 <div className="container">
                     <div className="row row-header">
                         <div className="col-12" style={{fontFamily:'Merienda',alignItems:'center'}}>
-                            <h1 style={{fontSize:'4vw',fontFamily:'Merienda'}}>GRE/SAT College Predictor</h1>
+                            <h1 style={{fontSize:'4vw',fontFamily:'Merienda'}}>SAT/GMAT College Predictor</h1>
                             
                         </div>
                     </div>
                 </div>
             </Jumbotron>
             <CGPAConverter/>
+            <Alert color="info">
+        Try  <a href="/rankPrediction" className="alert-link">JEE Mains/Advanced Rank Predictor</a>. Give it a click if you like.
+      </Alert>
         </div>
     );
 };
