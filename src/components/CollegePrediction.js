@@ -59,7 +59,6 @@ const CollegePrediction = () => {
         'Dartmouth College',
         'Vanderbilt University',
         'Columbia University in the City of New York',
-        'Webb Institute',
         'University of Notre Dame',
         'Swarthmore College',
         'University of Pennsylvania',
