@@ -1,6 +1,162 @@
 import * as ActionTypes from './actionTypes';
 const baseUrl= 'http://localhost:8000'
 
+export const mpredictSuccess = (prediction) => ({
+    type: ActionTypes.MRANKPREDICT_SUCCESS,
+    payload: prediction
+});
+
+export const mpredictFailed = (errmess) => ({
+    type: ActionTypes.MRANKPREDICT_FAILED,
+    payload: errmess
+});
+
+export const mpredictLoading = () => ({
+    type: ActionTypes.MRANKPREDICT_LOADING
+});
+
+export const getMainsPrediction =  (info) => (dispatch) => {
+    dispatch(mpredictLoading(true))
+    const [marks, totalMarks,category] = [info.marks, info.totalMarks,info.category]
+
+    return  fetch(baseUrl + `/mainspredict?marks=${marks}&totalMarks=${totalMarks}&category=${category}`, {
+        method: 'GET',
+
+    } )
+        .then(response => {
+            if (response.ok) {
+                return response;
+            }
+            else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        }, 
+            error => {
+                var errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(prediction => {dispatch(mpredictSuccess(prediction))})
+        .catch(error => {
+            //console.log('Predict Error ', error)
+            dispatch(mpredictFailed(error))
+        })
+
+}
+
+export const apredictSuccess = (prediction) => ({
+    type: ActionTypes.ARANKPREDICT_SUCCESS,
+    payload: prediction
+});
+
+export const apredictFailed = (errmess) => ({
+    type: ActionTypes.ARANKPREDICT_FAILED,
+    payload: errmess
+});
+
+export const apredictLoading = () => ({
+    type: ActionTypes.ARANKPREDICT_LOADING
+});
+
+export const getAdvancedPrediction =  (info) => (dispatch) => {
+    dispatch(apredictLoading(true))
+    const [marks, totalMarks,category] = [info.marks, info.totalMarks,info.category]
+
+    return  fetch(baseUrl + `/advancedpredict?marks=${marks}&totalMarks=${totalMarks}&category=${category}`, {
+        method: 'GET',
+
+    } )
+        .then(response => {
+            if (response.ok) {
+                return response;
+            }
+            else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        }, 
+            error => {
+                var errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(prediction => {dispatch(apredictSuccess(prediction))})
+        .catch(error => {
+            //console.log('Predict Error ', error)
+            dispatch(apredictFailed(error))
+        })
+
+}
+
+export const cpredictSuccess = (prediction) => ({
+    type: ActionTypes.SCOLLEGEPREDICT_SUCCESS,
+    payload: prediction
+});
+
+export const cpredictFailed = (errmess) => ({
+    type: ActionTypes.SCOLLEGEPREDICT_FAILED,
+    payload: errmess
+});
+
+export const cpredictLoading = () => ({
+    type: ActionTypes.SCOLLEGEPREDICT_LOADING
+});
+
+export const getSatCollegePrediction =  (info) => (dispatch) => {
+    dispatch(cpredictLoading(true))
+    const [clg, marks,gpa] = [info.clg, info.marks,info.gpa]
+
+    return  fetch(baseUrl + `/satpredict?clg=${clg}&marks=${marks}&gpa=${gpa}`, {
+        method: 'GET',
+
+    } )
+        .then(response => {
+            if (response.ok) {
+                return response;
+            }
+            else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        }, 
+            error => {
+                var errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(prediction => {dispatch(cpredictSuccess(prediction))})
+        .catch(error => {
+            //console.log('Predict Error ', error)
+            dispatch(cpredictFailed(error))
+        })
+
+}
+
+export const sCollegeLoading = () => ({
+    type: ActionTypes.SCOLLEGE_LOADING
+});
+
+export const sCollegeFailed = (errmess) => ({
+    type: ActionTypes.SCOLLEGE_FAILED,
+    payload: errmess
+});
+
+export const sCollegeSuccess = (clgList) => {
+    //console.log(watchlist.watchlist)
+    return {
+    type: ActionTypes.SCOLLEGE_SUCCESS,
+    payload: clgList
+}};
+
+export const addSCollege = (college) => ({
+    type: ActionTypes.ADD_SCOLLEGE,
+    payload: college
+});
+
 export const requestRegister = (creds) => {
     return {
         type: ActionTypes.REGISTER_REQUEST,
