@@ -1,6 +1,8 @@
 import React,{useState} from 'react';
 import { Jumbotron } from 'reactstrap';
 import NavDash from './NavDash';
+import Header from "./Header";
+import Footer from './Footer';
 import {
     Container, Col, Form,
     FormGroup, Label, Input,
@@ -9,7 +11,7 @@ import {
     FormFeedback,Spinner,UncontrolledAlert,Alert
   } from 'reactstrap';
 
-const RankPredictForm = () => {
+const RankPredictForm = (props) => {
     const [initialState, setState] = useState({
         SelectedExam: 'JEE Mains',
         Marks: '',
@@ -41,6 +43,7 @@ const RankPredictForm = () => {
     //alert("EmailId: " +initialState.EmailId)
     }
     return (
+<>
 
         <div className='container-fluid' style={{padding:0}}>
             <div className='container-fluid' style={{backgroundImage:"url('assets/images/header.png')",backgroundPosition: 'center',
@@ -135,6 +138,8 @@ const RankPredictForm = () => {
             </div>
 
         </div>
+        <Footer/>
+        </>
     );
 };
 

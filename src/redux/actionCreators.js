@@ -1,6 +1,51 @@
 import * as ActionTypes from './actionTypes';
 const baseUrl= 'http://localhost:8000'
 
+export const gradeConvertSuccess = (grade) => ({
+    type: ActionTypes.GRADECONVERT_SUCCESS,
+    payload: grade
+});
+
+export const gradeConvertFailed = (errmess) => ({
+    type: ActionTypes.GRADECONVERT_FAILED,
+    payload: errmess
+});
+
+export const gradeConvertLoading = () => ({
+    type: ActionTypes.GRADECONVERT_LOADING
+});
+
+export const convertGrade =  (cgpa) => (dispatch) => {
+    dispatch(gradeConvertLoading(true))
+    const cgpa = cgpa
+
+    return  fetch(baseUrl + `/gradeConvert?cgpa=${cgpa}`, {
+        method: 'GET',
+
+    } )
+        .then(response => {
+            if (response.ok) {
+                return response;
+            }
+            else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        }, 
+            error => {
+                var errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(grade => {dispatch(gradeConvertSuccess(grade))})
+        .catch(error => {
+            //console.log('Predict Error ', error)
+            dispatch(gradeConvertFailed(error))
+        })
+
+}
+
 export const mpredictSuccess = (prediction) => ({
     type: ActionTypes.MRANKPREDICT_SUCCESS,
     payload: prediction
@@ -156,6 +201,149 @@ export const addSCollege = (college) => ({
     type: ActionTypes.ADD_SCOLLEGE,
     payload: college
 });
+
+export const postSCollege = (clg) => (dispatch) => {
+
+    const newClg = {
+        name: clg.name,
+        description: clg.discription,
+        image: clg.image,
+        datasetPath: clg.dataset,
+        collegeLink: clg.collegeLink
+    }
+    console.log('College: ', newClg);
+
+    const bearer = 'Bearer ' + localStorage.getItem('token');
+
+    return fetch(baseUrl + 'colleges', {
+        method: 'POST',
+        body: JSON.stringify(newClg),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': bearer
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                return response;
+            }
+            else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },
+            error => {
+                var errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(response => { alert("College added Successfully!!"); dispatch(addSCollege(response)); dispatch(fetchSCollege()); })
+        .catch(error => {
+            console.log('Post College ', error.message);
+            alert('COllege could not be added\nError: ' + error.message);
+        })
+}
+
+export const deleteSCollege = (clgId) => (dispatch) => {
+
+    const bearer = 'Bearer ' + localStorage.getItem('token');
+
+    return fetch(baseUrl + 'colleges/' + clgId, {
+        method: "DELETE",
+        headers: {
+            'Authorization': bearer
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                return response;
+            } else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },
+            error => {
+                throw error;
+            })
+        .then(response => response.json())
+        .then(clg => { console.log('College Deleted', clg); dispatch(fetchSCollege()); })
+        .catch(error => dispatch(sCollegeFailed(error.message)));
+};
+
+export const updateSCollege = (clg) => (dispatch) => {
+
+    const newClg = {
+        name: clg.name,
+        description: clg.discription,
+        image: clg.image,
+        datasetPath: clg.dataset,
+        collegeLink: clg.collegeLink
+    }
+    console.log('College: ', newClg);
+
+    const bearer = 'Bearer ' + localStorage.getItem('token');
+
+    return fetch(baseUrl + 'colleges/' + clg.id, {
+        method: 'PUT',
+        body: JSON.stringify(newClg),
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': bearer
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                return response;
+            }
+            else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },
+            error => {
+                var errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(response => { alert("COllege Updated!"); dispatch(fetchSCollege()); })
+        .catch(error => {
+            console.log('Update College ', error.message);
+            alert('College could not be updated\nError: ' + error.message);
+        })
+}
+
+export const fetchSCollege = () => (dispatch) => {
+    dispatch(sCollegeLoading(true));
+
+   
+
+    return fetch(baseUrl + 'colleges', {
+        headers: {
+            'method': 'GET',
+        
+        },
+    })
+        .then(response => {
+            if (response.ok) {
+                return response;
+            }
+            else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },
+            error => {
+                var errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(clgs => dispatch(sCollegeSuccess(clgs)))
+        .catch(error => dispatch(sCollegeFailed(error.message)));
+}
 
 export const requestRegister = (creds) => {
     return {

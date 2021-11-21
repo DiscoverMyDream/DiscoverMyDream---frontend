@@ -1,13 +1,13 @@
 import React,{useState} from 'react';
 import {
     Container, Col, Form,
-    FormGroup, Label, Input,
+    FormGroup, Label, Input,Spinner,
     Button, Modal, ModalFooter,
     ModalHeader, ModalBody,
     FormFeedback,Spinner,UncontrolledAlert,Alert
   } from 'reactstrap';
 
-const CGPAConverter = () => {
+const CGPAConverter = (props) => {
     const [initialState, setState] = useState({
         CGPA: '',
         touched: {
@@ -40,7 +40,7 @@ const CGPAConverter = () => {
         call();
     }
     const call =() =>{
-      var url = 'http://localhost:8000?cgpa='+initialState.CGPA;
+      /*var url = 'http://localhost:8000?cgpa='+initialState.CGPA;
       fetch(url)
       .then(res => res.json())
     .then(data => {
@@ -49,10 +49,15 @@ const CGPAConverter = () => {
     })
     .catch(rejected => {
         console.log(rejected);
-    });
+    });*/
+    props.convertGrade(initialState.CGPA)
+
       
 
     }
+    const grade = props.gradeConversion.grade
+    const GPA= grade[0]
+    const grad=grade[1]
     return (
         <div className='container-fluid  justify-content-center' style={{alignItems:'center',paddingBottom:'30px'}}>
             <div className='row center justify-content-center'style={{alignItems:'center',paddingBottom:'30px'}}>
@@ -110,7 +115,7 @@ const CGPAConverter = () => {
             <div className='row center justify-content-center'>
             <div className="col-md-5" id='show_gpa'>
               
-                {showGpa?<div className="well" ><p style={{fontSize:'130%'}} >As per the 4 point scale, your GPA is <b>{data[0]}</b></p><p style={{fontSize:'130%'}}>Your grade is <b>{data[1]}</b></p></div>:<div class="well grey-bg text-white" style={{backgroundColor:'#186344',fontSize:'130%'}}>Enter CGPA to check GPA &amp; Grade</div>}
+                {showGpa?<div className="well" ><p style={{fontSize:'130%'}} >As per the 4 point scale, your GPA is <b>{GPA}</b></p><p style={{fontSize:'130%'}}>Your grade is <b>{grad}</b></p></div>:<div class="well grey-bg text-white" style={{backgroundColor:'#186344',fontSize:'130%'}}>Enter CGPA to check GPA &amp; Grade</div>}
             </div>
             
                 

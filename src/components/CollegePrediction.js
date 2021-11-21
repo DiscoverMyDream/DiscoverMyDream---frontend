@@ -1,5 +1,7 @@
 import React,{useState} from 'react';
 import { Jumbotron } from 'reactstrap';
+import Header from "./Header";
+import Footer from './Footer';
 import {
     Container, Col, Form,
     FormGroup, Label, Input,
@@ -10,7 +12,7 @@ import {
 import CGPAConverter from './CGPAConverter';
 import NavDash from './NavDash';
 
-const CollegePrediction = () => {
+const CollegePrediction = (props) => {
     const [initialState, setState] = useState({
         SelectedExam: 'SAT',
         Marks: '',
@@ -94,6 +96,8 @@ const CollegePrediction = () => {
         )
     } );
     return (
+      <>
+     
         <div className='container-fluid' style={{padding:0}}>
         <div className='container-fluid' style={{backgroundImage:"url('assets/images/header.png')",backgroundPosition: 'center',
     backgroundSize: 'cover',backgroundRepeat: 'no-repeat'}}>
@@ -109,7 +113,7 @@ const CollegePrediction = () => {
                     </div>
                 </div>
             </Jumbotron>
-            <CGPAConverter/>
+            <CGPAConverter gradeConversion={props.gradeConversion}/>
             <div className='container-fluid justify-content-center'>
                 <div className='row justify-content-center' style={{paddingBottom:'20px'}}>
                 <div className='col-md-6 justify-content-center border border-2' style={{borderRadius:'50px 50px',borderColor:'green',backgroundColor:'#FFFFFF',padding:'15px'}}>
@@ -206,6 +210,8 @@ const CollegePrediction = () => {
         Try  <a href="/rankPrediction" className="alert-link">JEE Mains/Advanced Rank Predictor</a>. Give it a click if you like.
       </Alert>
         </div>
+        <Footer/>
+        </>
     );
 };
 
