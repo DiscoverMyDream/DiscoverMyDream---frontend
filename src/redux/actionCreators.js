@@ -16,9 +16,9 @@ export const gradeConvertLoading = () => ({
     type: ActionTypes.GRADECONVERT_LOADING
 });
 
-export const convertGrade =  (cgpa) => (dispatch) => {
+export const convertGrade =  (Cgpa) => (dispatch) => {
     dispatch(gradeConvertLoading(true))
-    const cgpa = cgpa
+    const cgpa = Cgpa
 
     return  fetch(basePUrl + `/gradeConvert?cgpa=${cgpa}`, {
         method: 'GET',
@@ -26,6 +26,7 @@ export const convertGrade =  (cgpa) => (dispatch) => {
     } )
         .then(response => {
             if (response.ok) {
+                console.log(response)
                 return response;
             }
             else {
@@ -432,7 +433,7 @@ export const loginUser = (creds) => (dispatch) => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
 
-    return fetch(baseUrl + 'users/login', {
+    return fetch(baseUrl + '/api/users/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

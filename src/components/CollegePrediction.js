@@ -11,6 +11,24 @@ import {
   } from 'reactstrap';
 import CGPAConverter from './CGPAConverter';
 import NavDash from './NavDash';
+import { connect } from "react-redux";
+  import{getMainsPrediction,getAdvancedPrediction,getSatCollegePrediction,registerUser,loginUser,fetchSCollege,updateSCollege,deleteSCollege,postSCollege,logoutUser, convertGrade} from '../redux/actionCreators';
+
+
+const mapDispatchToProps = (dispatch) => ({
+
+  convertGrade: (cgpa) => dispatch(convertGrade(cgpa)),
+  
+})
+
+const mapStateToProps = (state) => {
+  return {
+      
+      gradeConversion: state.gradeConversion,
+    
+  }
+}
+
 
 const CollegePrediction = (props) => {
     const [initialState, setState] = useState({
@@ -27,6 +45,12 @@ const CollegePrediction = (props) => {
     const [modal, setModal] = React.useState(false);
   
     const toggle = () => setModal(!modal);
+    const selectCollege = (event)=>{
+      setState({
+        ...initialState,
+        SCollege: event.target.value
+      })
+    }
     const handleInputChange =(event) =>{
   
         const target = event.target;
@@ -44,7 +68,31 @@ const CollegePrediction = (props) => {
       const handleSubmit = (event) => {
         event.preventDefault();
         toggle();
+        initialState.SelectedExam=='SAT'?callSat():callGmat();
         }
+
+  
+        const [data,setData]=useState([50])
+
+        const callSat =() =>{
+          var url = `http://localhost:8000/satpredict?clg=${initialState.SCollege}&marks=${initialState.Marks}&gpa=${initialState.GPA}`;
+          console.log(url);
+          fetch(url)
+          .then(res => res.json())
+        .then(data => {
+          setData(data);
+          //console.log(data)
+        })
+        .catch(rejected => {
+            console.log(rejected);
+        })
+      }
+      const callGmat =() =>{
+        alert('This feature is yet to be implemented')
+        
+        
+    } 
+    const percentage = data[0] 
     const satClg = [
         'California Institute of Technology',
         'Harvard University',
@@ -113,7 +161,7 @@ const CollegePrediction = (props) => {
                     </div>
                 </div>
             </Jumbotron>
-            <CGPAConverter gradeConversion={props.gradeConversion}/>
+            <CGPAConverter gradeConversion={props.gradeConversion} convertGrade={props.convertGrade}/>
             <div className='container-fluid justify-content-center'>
                 <div className='row justify-content-center' style={{paddingBottom:'20px'}}>
                 <div className='col-md-6 justify-content-center border border-2' style={{borderRadius:'50px 50px',borderColor:'green',backgroundColor:'#FFFFFF',padding:'15px'}}>
@@ -169,7 +217,7 @@ const CollegePrediction = (props) => {
               <FormGroup className='rowL'>
               <Label style={{fontSize:'130%'}} >Select the college</Label>
               <Col sm={6}>
-          <Input type="select" name="College" required onChange={handleInputChange} className='minimal' value={initialState.SelectedExam=='SAT'?initialState.SCollege:initialState.GCollege}>
+          <Input type="select" name="College" required onChange={selectCollege} className='minimal' /*value={initialState.SelectedExam=='SAT'?initialState.SCollege:initialState.GCollege}*/ value={initialState.SCollege}>
             {pairList}
             
           </Input>
@@ -193,7 +241,7 @@ const CollegePrediction = (props) => {
               
                    <br/><br/>
                     <h2 style={{alignSelf:'center'}}>
-                    Chances of your getting into <span style={{color:'purple'}}> {initialState.SelectedExam=='SAT'?initialState.SCollege:initialState.GCollege}</span> is <br/><strong style={{alignContent:'center'}}> 67%</strong>
+                    Chances of your getting into <span style={{color:'purple'}}> {initialState.SelectedExam=='SAT'?initialState.SCollege:initialState.GCollege}</span> is <br/><strong style={{alignContent:'center'}}> {percentage}</strong>
                     <br/><br/>
                     
                     </h2>
@@ -215,4 +263,4 @@ const CollegePrediction = (props) => {
     );
 };
 
-export default CollegePrediction;
+export default connect(mapStateToProps,mapDispatchToProps)(CollegePrediction);

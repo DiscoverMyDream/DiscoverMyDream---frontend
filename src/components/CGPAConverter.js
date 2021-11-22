@@ -6,6 +6,25 @@ import {
     ModalHeader, ModalBody,
     FormFeedback,Spinner,UncontrolledAlert,Alert
   } from 'reactstrap';
+  import { connect } from "react-redux";
+  import{getMainsPrediction,getAdvancedPrediction,getSatCollegePrediction,registerUser,loginUser,fetchSCollege,updateSCollege,deleteSCollege,postSCollege,logoutUser, convertGrade} from '../redux/actionCreators';
+
+
+
+  const mapDispatchToProps = (dispatch) => ({
+
+    convertGrade: (cgpa) => dispatch(convertGrade(cgpa)),
+    
+  })
+  
+  const mapStateToProps = (state) => {
+    return {
+        
+        gradeConversion: state.gradeConversion,
+      
+    }
+  }
+  
 
 const CGPAConverter = (props) => {
     const [initialState, setState] = useState({
@@ -29,9 +48,11 @@ const CGPAConverter = (props) => {
         });
       }
 
-    const handleSubmit = (event) => {
+    const handleSubmit =async (event) => {
     event.preventDefault();
-    convert();
+    setShowGpa(true);
+    //await props.convertGrade(initialState.CGPA)
+    call();
     }
     const [showGpa,setShowGpa]=useState(false);
     const [data,setData]=useState([10,'A'])
@@ -40,7 +61,7 @@ const CGPAConverter = (props) => {
         call();
     }
     const call =() =>{
-      /*var url = 'http://localhost:8000?cgpa='+initialState.CGPA;
+      var url = 'http://localhost:8000/gradeConvert?cgpa='+initialState.CGPA;
       fetch(url)
       .then(res => res.json())
     .then(data => {
@@ -49,13 +70,14 @@ const CGPAConverter = (props) => {
     })
     .catch(rejected => {
         console.log(rejected);
-    });*/
-    props.convertGrade(initialState.CGPA)
+    });
+   //await props.convertGrade(initialState.CGPA)
 
       
 
     }
-    const grade = props.gradeConversion.grade
+    //const grade = props.gradeConversion.grade
+    const grade = data
     const GPA= grade[0]
     const grad=grade[1]
     return (

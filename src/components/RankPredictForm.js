@@ -15,11 +15,39 @@ const RankPredictForm = (props) => {
     const [initialState, setState] = useState({
         SelectedExam: 'JEE Mains',
         Marks: '',
-        Category:'Open',
+        Category:'OPEN',
         touched: {
         Marks:false
     }
     })
+
+    const [data,setData]=useState([1,1,1])
+
+    const callM =() =>{
+      var url = `http://localhost:8000/mainspredict?marks=${initialState.Marks}&totalMarks=${300}&category=${initialState.Category}`;
+      console.log(url);
+      fetch(url)
+      .then(res => res.json())
+    .then(data => {
+      setData(data);
+      //console.log(data)
+    })
+    .catch(rejected => {
+        console.log(rejected);
+    })
+  }
+  const callA =() =>{
+    var url = `http://localhost:8000/advancepredict?marks=${initialState.Marks}&totalMarks=${372}&category=${initialState.Category}`
+    fetch(url)
+    .then(res => res.json())
+  .then(data => {
+    setData(data);
+    //console.log(data)
+  })
+  .catch(rejected => {
+      console.log(rejected);
+  })
+}
     const [modal, setModal] = React.useState(false);
   
     const toggle = () => setModal(!modal);
@@ -40,8 +68,12 @@ const RankPredictForm = (props) => {
     const handleSubmit = (event) => {
     event.preventDefault();
     toggle();
+    initialState.SelectedExam=="JEE Mains"?callM():callA()
     //alert("EmailId: " +initialState.EmailId)
     }
+    const rank=data[0]
+    const low=data[1]
+    const high= data[2]
     return (
 <>
 
@@ -120,9 +152,10 @@ const RankPredictForm = (props) => {
               
                    <br/><br/>
                     <h2 style={{alignSelf:'center'}}>
-                    Predicted {initialState.SelectedExam} Rank is <br/><strong style={{alignContent:'center'}}> ~1500</strong>
+                    Predicted {initialState.SelectedExam} Rank is <br/><strong style={{alignContent:'center'}}> {rank}</strong>
                     <br/><br/>
-                    {initialState.SelectedExam=='JEE Mains'? <span>Approximate Percentile is<br/><strong style={{alignContent:'center'}}> ~99.2235</strong></span>:<span></span>}
+                    {/*initialState.SelectedExam=='JEE Mains'? <span>Approximate Percentile is<br/><strong style={{alignContent:'center'}}> ~99.2235</strong></span>:<span></span>*/}
+                    Your rank is between {low} and {high}
                     </h2>
                 </ModalBody>
                 <ModalFooter style={{alignItems:'center'}} className='justify-content-center'>

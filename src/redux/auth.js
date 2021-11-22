@@ -2,7 +2,7 @@ import * as ActionTypes from './actionTypes';
 
 export const Auth = (state = {
     isLoading: false,
-    isAuthenticated: localStorage.getItem('token') ? true : false,
+    isAuthenticated: /*localStorage.getItem('token') ? true : false*/true,
     token: localStorage.getItem('token'),
     user: localStorage.getItem('creds') ? JSON.parse(localStorage.getItem('creds')) : null,
     errMess: null,
