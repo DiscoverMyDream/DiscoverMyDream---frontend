@@ -1,6 +1,6 @@
 import * as ActionTypes from './actionTypes';
-const basePUrl= 'http://localhost:8000'
-const baseUrl = 'http://localhost:5000'
+import axios from "axios";
+const baseUrl= 'http://localhost:8000'
 
 export const gradeConvertSuccess = (grade) => ({
     type: ActionTypes.GRADECONVERT_SUCCESS,
@@ -20,7 +20,7 @@ export const convertGrade =  (cgpa) => (dispatch) => {
     dispatch(gradeConvertLoading(true))
     const cgpa = cgpa
 
-    return  fetch(basePUrl + `/gradeConvert?cgpa=${cgpa}`, {
+    return  fetch(baseUrl + `/gradeConvert?cgpa=${cgpa}`, {
         method: 'GET',
 
     } )
@@ -65,7 +65,7 @@ export const getMainsPrediction =  (info) => (dispatch) => {
     dispatch(mpredictLoading(true))
     const [marks, totalMarks,category] = [info.marks, info.totalMarks,info.category]
 
-    return  fetch(basePUrl + `/mainspredict?marks=${marks}&totalMarks=${totalMarks}&category=${category}`, {
+    return  fetch(baseUrl + `/mainspredict?marks=${marks}&totalMarks=${totalMarks}&category=${category}`, {
         method: 'GET',
 
     } )
@@ -110,7 +110,7 @@ export const getAdvancedPrediction =  (info) => (dispatch) => {
     dispatch(apredictLoading(true))
     const [marks, totalMarks,category] = [info.marks, info.totalMarks,info.category]
 
-    return  fetch(basePUrl + `/advancedpredict?marks=${marks}&totalMarks=${totalMarks}&category=${category}`, {
+    return  fetch(baseUrl + `/advancedpredict?marks=${marks}&totalMarks=${totalMarks}&category=${category}`, {
         method: 'GET',
 
     } )
@@ -155,7 +155,7 @@ export const getSatCollegePrediction =  (info) => (dispatch) => {
     dispatch(cpredictLoading(true))
     const [clg, marks,gpa] = [info.clg, info.marks,info.gpa]
 
-    return  fetch(basePUrl + `/satpredict?clg=${clg}&marks=${marks}&gpa=${gpa}`, {
+    return  fetch(baseUrl + `/satpredict?clg=${clg}&marks=${marks}&gpa=${gpa}`, {
         method: 'GET',
 
     } )
@@ -417,7 +417,7 @@ export const receiveLogin = (response) => {
     return {
         type: ActionTypes.LOGIN_SUCCESS,
         token: response.token,
-        isAdmin: response.isAdmin
+        admin: response.admin
     }
 }
 
@@ -457,7 +457,7 @@ export const loginUser = (creds) => (dispatch) => {
                 // If login was successful, set the token in local storage
                 localStorage.setItem('token', response.token);
                 localStorage.setItem('creds', JSON.stringify(creds));
-                localStorage.setItem('isAdmin', response.isAdmin);
+                localStorage.setItem('admin', response.admin);
                 // Dispatch the success action
                 
                 dispatch(receiveLogin(response));
@@ -488,8 +488,357 @@ export const logoutUser = () => (dispatch) => {
     dispatch(requestLogout())
     localStorage.removeItem('token');
     localStorage.removeItem('creds');
-    localStorage.removeItem('isAdmin');
+    localStorage.removeItem('admin');
     //dispatch(sCollegesFailed("Error 401: Unauthorized"));
 
     dispatch(receiveLogout())
 }
+//----------------------------//
+
+export const getUserDetails = (id) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ActionTypes.USER_DETAILS_REQUEST,
+      });
+  
+      const {
+        userLogin: { userInfo },
+      } = getState();
+  
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+  
+      const { data } = await axios.get(`/api/users/${id}`, config);
+  
+      dispatch({
+        type: ActionTypes.USER_DETAILS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logoutUser())
+      }
+      dispatch({
+        type: ActionTypes.USER_DETAILS_FAIL,
+        payload: message,
+      });
+    }
+  };
+  
+  export const updateUserProfile = (user) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ActionTypes.USER_UPDATE_PROFILE_REQUEST,
+      });
+  
+      const {
+        userLogin: { userInfo },
+      } = getState();
+  
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+  
+      const { data } = await axios.put(`/api/users/profile`, user, config);
+  
+      dispatch({
+        type: ActionTypes.USER_UPDATE_PROFILE_SUCCESS,
+        payload: data,
+      });
+      dispatch({
+        type: ActionTypes.LOGIN_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logoutUser())
+      }
+      dispatch({
+        type: ActionTypes.USER_UPDATE_PROFILE_FAIL,
+        payload: message,
+      });
+    }
+  };
+  
+  export const listUsers = () => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ActionTypes.USER_LIST_REQUEST,
+      });
+  
+      const {
+        userLogin: { userInfo },
+      } = getState();
+  
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+  
+      const { data } = await axios.get(`/api/users`, config);
+  
+      dispatch({
+        type: ActionTypes.USER_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logoutUser())
+      }
+      dispatch({
+        type: ActionTypes.USER_LIST_FAIL,
+        payload: message,
+      });
+    }
+  };
+  
+  export const deleteUser = (id) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ActionTypes.USER_DELETE_REQUEST,
+      });
+  
+      const {
+        userLogin: { userInfo },
+      } = getState();
+  
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+  
+      await axios.delete(`/api/users/${id}`, config);
+  
+      dispatch({ type: ActionTypes.USER_DELETE_SUCCESS });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logoutUser())
+      }
+      dispatch({
+        type: ActionTypes.USER_DELETE_FAIL,
+        payload: message,
+      });
+    }
+  };
+  
+  export const updateUser = (user) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ActionTypes.USER_UPDATE_REQUEST,
+      });
+  
+      const {
+        userLogin: { userInfo },
+      } = getState();
+  
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+  
+      const { data } = await axios.put(`/api/users/${user._id}`, user, config);
+  
+      dispatch({ type: ActionTypes.USER_UPDATE_SUCCESS });
+  
+      dispatch({ type: ActionTypes.USER_DETAILS_SUCCESS, payload: data });
+      
+      dispatch({ type: ActionTypes.USER_DETAILS_RESET });    
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logoutUser())
+      }
+      dispatch({
+        type: ActionTypes.USER_UPDATE_FAIL,
+        payload: message,
+      });
+    }
+  };
+  //----------------------------------------------------------//
+
+  export const listColleges = (keyword = '', pageNumber = '') => async (dispatch) => {
+    try {
+      dispatch({ type: ActionTypes.COLLEGE_LIST_REQUEST })
+  
+      const { data } = await axios.get(`/api/colleges?keyword=${keyword}&pageNumber=${pageNumber}`);
+  
+      dispatch({
+        type: ActionTypes.COLLEGE_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ActionTypes.COLLEGE_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.response,
+      });
+    }
+  };
+  
+  export const listCollegeDetails = (id) => async (dispatch) => {
+    try {
+      dispatch({ type: ActionTypes.COLLEGE_DETAILS_REQUEST });
+  
+      const { data } = await axios.get(`/api/colleges/${id}`);
+  
+      dispatch({
+        type: ActionTypes.COLLEGE_DETAILS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ActionTypes.COLLEGE_DETAILS_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+  
+  export const deleteCollege = (id) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ActionTypes.COLLEGE_DELETE_REQUEST,
+      });
+  
+      const {
+        userLogin: { userInfo },
+      } = getState();
+  
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+  
+      await axios.delete(`/api/colleges/${id}`, config);
+  
+      dispatch({
+        type: ActionTypes.COLLEGE_DELETE_SUCCESS,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logoutUser())
+      }
+      dispatch({
+        type: ActionTypes.COLLEGE_DELETE_FAIL,
+        payload: message,
+      });
+    }
+  };
+  
+  export const createCollege = () => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ActionTypes.COLLEGE_CREATE_REQUEST,
+      });
+  
+      const {
+        userLogin: { userInfo },
+      } = getState();
+  
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+  
+      const { data } = await axios.post(`/api/colleges`, {}, config);
+  
+      dispatch({
+        type: ActionTypes.COLLEGE_CREATE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logoutUser())
+      }
+      dispatch({
+        type: ActionTypes.COLLEGE_CREATE_FAIL,
+        payload: message,
+      });
+    }
+  };
+  
+  export const updateCollege = (college) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ActionTypes.COLLEGE_UPDATE_REQUEST,
+      });
+  
+      const {
+        userLogin: { userInfo },
+      } = getState();
+  
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+  
+      const { data } = await axios.put(
+        `/api/colleges/${college._id}`,
+        college,
+        config
+      );
+  
+      dispatch({
+        type: ActionTypes.COLLEGE_UPDATE_SUCCESS,
+        payload: data,
+      });
+      dispatch({ type: ActionTypes.COLLEGE_DETAILS_SUCCESS, payload: data });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logoutUser())
+      }
+      dispatch({
+        type: ActionTypes.COLLEGE_UPDATE_FAIL,
+        payload: message,
+      });
+    }
+  }

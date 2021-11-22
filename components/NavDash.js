@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink} from 'reactstrap';
 
-const NavComp = () => {
+const NavDash = () => {
     const [collapsed, setCollapsed] = useState(true);
 
     const toggleNavbar = () => setCollapsed(!collapsed);
@@ -19,10 +19,7 @@ const NavComp = () => {
               </div>
               
 
-             { /*
-          </div>
-          <div style={{width:'100%',textAlign:'center',justifyContent:'center',verticalAlign:'center',marginTop:'auto'}} className='col-sm-2 my-auto'> 
-             <h1 className='my-auto' id='top' style={{fontSize:'3.1vw',alignContent:'center'}}>Compra Venta</h1></div></div></div>*/}
+            
           </NavbarBrand>
         
         <NavbarToggler  onClick={toggleNavbar} className="me-0"/>
@@ -34,14 +31,9 @@ const NavComp = () => {
             <NavItem>
               <NavLink style={{color:'#FEFAFA',paddingRight:'5.5vw'}}  href="">About</NavLink>
             </NavItem>
+            
             <NavItem>
-              <NavLink style={{color:'#FEFAFA',paddingRight:'5.5vw'}}  href="/studentLogin">Student</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink style={{color:'#FEFAFA',paddingRight:'1.5vw'}}  href="/adminLogin">Admin</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink style={{color:'#FEFAFA',paddingRight:'1.5vw'}}  href="/CollegePage">Colleges</NavLink>
+              <NavLink style={{color:'#FEFAFA',paddingRight:'1.5vw'}}  href="/home">Logout</NavLink>
             </NavItem>
           </Nav>
         </Collapse>
@@ -52,4 +44,4 @@ const NavComp = () => {
     );
 };
 
-export default NavComp;
+export default NavDash;
