@@ -3,7 +3,7 @@ import Header from "./Header";
 import Footer from './Footer';
 import LandingPage from './LandingPage';
 import LoginForm from './AdminLoginComponent';
-import { Route, Switch, Redirect } from 'react-router';
+//import { Route, Switch, Redirect } from 'react-router';
 import SLoginForm from './StudentLoginComponent';
 import StudentRegisterComponent from './StudentRegisterComponent';
 import RankPredictForm from './RankPredictForm';
@@ -12,8 +12,8 @@ import CollegePrediction from './CollegePrediction';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import{getMainsPrediction,getAdvancedPrediction,getSatCollegePrediction,registerUser,loginUser,fetchSCollege,updateSCollege,deleteSCollege,postSCollege,logoutUser, convertGrade} from '../redux/actionCreators';
-import { useEffect, useState } from "react";
 
+import  RouteGuard from './RouteGuard'
 const mapDispatchToProps = (dispatch) => ({
 
     getMainsPrediction: (info) => dispatch(getMainsPrediction(info)),
@@ -65,14 +65,15 @@ const MainComponent = (props) => {
             </div>
             <Footer/>
             </Route>
-            <RouteGuard
+            {/*<RouteGuard
                         exact
                         path='/admin'
                         isAuthenticated={props.auth.isAuthenticated}
                         isAdmin={props.auth.admin}
                         redPath='/adminLogin'
-                        component={/*AdminComponent*/}
+                        component={AdminComponent}
                         />
+            */}
             <Route path='/studentLogin'>
                 <Header/>
             <div style={{paddingTop:'7vh',paddingBottom:'7vh',background: 'rgba(229, 241, 234, 0.76)'}}>

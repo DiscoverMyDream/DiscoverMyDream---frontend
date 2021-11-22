@@ -2,14 +2,20 @@ import logo from './logo.svg';
 import './App.css';
 import MainComponent from './components/MainComponent';
 import { BrowserRouter } from 'react-router-dom';
-
+import { ConfigureStore } from "./redux/configureStore";
+import { Provider } from 'react-redux';
+const Store = ConfigureStore()
 function App() {
   return (
-    <div className="App">
+    <Provider store={Store}>
+    
       <BrowserRouter>
+      <div>
       <MainComponent/>
-      </BrowserRouter>
+     
     </div>
+    </BrowserRouter>
+    </Provider>
   );
 }
 
