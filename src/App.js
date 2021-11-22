@@ -8,13 +8,14 @@ const Store = ConfigureStore()
 function App() {
   return (
     <Provider store={Store}>
-    
+    <div className="App">
       <BrowserRouter>
-      <div>
+      
       <MainComponent/>
      
-    </div>
+    
     </BrowserRouter>
+    </div>
     </Provider>
   );
 }

@@ -1,5 +1,6 @@
 import * as ActionTypes from './actionTypes';
-const baseUrl= 'http://localhost:8000'
+const basePUrl= 'http://localhost:8000'
+const baseUrl = 'http://localhost:5000'
 
 export const gradeConvertSuccess = (grade) => ({
     type: ActionTypes.GRADECONVERT_SUCCESS,
@@ -19,7 +20,7 @@ export const convertGrade =  (cgpa) => (dispatch) => {
     dispatch(gradeConvertLoading(true))
     const cgpa = cgpa
 
-    return  fetch(baseUrl + `/gradeConvert?cgpa=${cgpa}`, {
+    return  fetch(basePUrl + `/gradeConvert?cgpa=${cgpa}`, {
         method: 'GET',
 
     } )
@@ -64,7 +65,7 @@ export const getMainsPrediction =  (info) => (dispatch) => {
     dispatch(mpredictLoading(true))
     const [marks, totalMarks,category] = [info.marks, info.totalMarks,info.category]
 
-    return  fetch(baseUrl + `/mainspredict?marks=${marks}&totalMarks=${totalMarks}&category=${category}`, {
+    return  fetch(basePUrl + `/mainspredict?marks=${marks}&totalMarks=${totalMarks}&category=${category}`, {
         method: 'GET',
 
     } )
@@ -109,7 +110,7 @@ export const getAdvancedPrediction =  (info) => (dispatch) => {
     dispatch(apredictLoading(true))
     const [marks, totalMarks,category] = [info.marks, info.totalMarks,info.category]
 
-    return  fetch(baseUrl + `/advancedpredict?marks=${marks}&totalMarks=${totalMarks}&category=${category}`, {
+    return  fetch(basePUrl + `/advancedpredict?marks=${marks}&totalMarks=${totalMarks}&category=${category}`, {
         method: 'GET',
 
     } )
@@ -154,7 +155,7 @@ export const getSatCollegePrediction =  (info) => (dispatch) => {
     dispatch(cpredictLoading(true))
     const [clg, marks,gpa] = [info.clg, info.marks,info.gpa]
 
-    return  fetch(baseUrl + `/satpredict?clg=${clg}&marks=${marks}&gpa=${gpa}`, {
+    return  fetch(basePUrl + `/satpredict?clg=${clg}&marks=${marks}&gpa=${gpa}`, {
         method: 'GET',
 
     } )
@@ -417,7 +418,7 @@ export const receiveLogin = (response) => {
     return {
         type: ActionTypes.LOGIN_SUCCESS,
         token: response.token,
-        admin: response.admin
+        isAdmin: response.isAdmin
     }
 }
 
@@ -457,7 +458,7 @@ export const loginUser = (creds) => (dispatch) => {
                 // If login was successful, set the token in local storage
                 localStorage.setItem('token', response.token);
                 localStorage.setItem('creds', JSON.stringify(creds));
-                localStorage.setItem('admin', response.admin);
+                localStorage.setItem('isAdmin', response.isAdmin);
                 // Dispatch the success action
                 
                 dispatch(receiveLogin(response));
@@ -488,7 +489,7 @@ export const logoutUser = () => (dispatch) => {
     dispatch(requestLogout())
     localStorage.removeItem('token');
     localStorage.removeItem('creds');
-    localStorage.removeItem('admin');
+    localStorage.removeItem('isAdmin');
     //dispatch(sCollegesFailed("Error 401: Unauthorized"));
 
     dispatch(receiveLogout())

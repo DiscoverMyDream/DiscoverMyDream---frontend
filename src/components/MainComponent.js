@@ -69,7 +69,7 @@ const MainComponent = (props) => {
                         exact
                         path='/admin'
                         isAuthenticated={props.auth.isAuthenticated}
-                        isAdmin={props.auth.admin}
+                        isAdmin={props.auth.isAdmin}
                         redPath='/adminLogin'
                         component={AdminComponent}
                         />
