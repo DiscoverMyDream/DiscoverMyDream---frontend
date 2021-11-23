@@ -1,12 +1,17 @@
-import React from 'react';
+import React ,{useState,useEffect} from 'react';
 import NavComp from './NavComp';
 import { Jumbotron } from 'reactstrap';
 
-const Header = () => {
+const Header = (props) => {
+    useEffect( ()=>{
+        console.log(props.auth)
+        
+    }
+    );
     return (
         <div className='container-fluid' style={{backgroundImage:"url('assets/images/header.png')",backgroundPosition: 'center',
         backgroundSize: 'cover',backgroundRepeat: 'no-repeat'}}>
-            <NavComp/>
+            <NavComp auth={props.auth} logoutUser={props.logoutUser}/>
             <Jumbotron style={{paddingTop:'5vh',paddingBottom:'20vh'}}>
                     <div className="container">
                         <div className="row row-header">

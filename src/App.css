@@ -388,3 +388,6 @@ select:-moz-focusring {
     -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%);
     box-shadow: inset 0 1px 1px rgb(0 0 0 / 5%);
 }
+.logoutt:hover{
+  cursor: pointer;
+}

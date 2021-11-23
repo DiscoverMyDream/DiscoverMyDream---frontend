@@ -48,9 +48,12 @@ class StudentRegisterComponent extends Component{
         });
       }
 
-    handleSubmit = (event) => {
+    handleSubmit = async(event) => {
         event.preventDefault();
+        await this.props.registerUser({name:this.state.FullName,email:this.state.EmailId,password:this.state.Password});
         //alert("EmailId: " +this.state.EmailId)
+        
+        
       }
 
 
@@ -134,6 +137,7 @@ class StudentRegisterComponent extends Component{
                   
                 
           </FormGroup>
+          {/*
           <FormGroup className='rowL'>
           <Label>Phone Number</Label>
           <Input
@@ -160,7 +164,8 @@ class StudentRegisterComponent extends Component{
                     required
                   />
                   
-                </FormGroup>
+                </FormGroup>*/
+          }
                 <FormGroup className='rowL'>
                   <Label >Password</Label>
                   <Input
@@ -189,11 +194,20 @@ class StudentRegisterComponent extends Component{
                   </FormGroup>
          < div id="buttonL" class="rowL">
     <button disabled={shouldSubmit}>Register</button>
+    <>
+    {this.props.register.isLoading?<div style={{textAlign:'center'}}><Spinner type='grow' color = "primary" children={false}/></div>:
+    this.props.register.isRegistered?
+    <div style={{ textAlign:'center'}}>
+              <Alert color='success'>
+              <h5>Registered Successfully!</h5>
+              </Alert>
+              </div>:null}
+    </>
     </div>
     <div style={{textAlign:'center'}}>Already Registered?&nbsp;&nbsp;&nbsp; <button type='button'  style={{color:'blue',borderColor:'transparent',backgroundColor:'transparent'}}><a href="/studentLogin">Sign In </a></button></div>
   
   </Form>
-        <OtherMethods/>    
+       {/* <OtherMethods/>   */} 
         </div>
     );
 }};

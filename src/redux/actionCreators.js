@@ -372,7 +372,7 @@ export const registerUser = (creds) => (dispatch) => {
     // We dispatch requestRegister to kickoff the call to the API
     dispatch(requestRegister(creds))
 
-    return fetch(baseUrl + '/register', {
+    return fetch(baseUrl + '/api/users', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -442,6 +442,7 @@ export const loginUser = (creds) => (dispatch) => {
     })
         .then(response => {
             if (response.ok) {
+                
                 return response;
             } else {
                 var error = new Error('Error ' + response.status + ': ' + response.statusText);
@@ -454,7 +455,9 @@ export const loginUser = (creds) => (dispatch) => {
             })
         .then(response => response.json())
         .then(response => {
-            if (response.success) {
+            console.log(response);
+            if (response.token) {
+               
                 // If login was successful, set the token in local storage
                 localStorage.setItem('token', response.token);
                 localStorage.setItem('creds', JSON.stringify(creds));
@@ -464,7 +467,7 @@ export const loginUser = (creds) => (dispatch) => {
                 dispatch(receiveLogin(response));
             }
             else {
-                var error = new Error('Error ' + response.status);
+                var error = new Error('Error ');
                 error.response = response;
                 throw error;
             }

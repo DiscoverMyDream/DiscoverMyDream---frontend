@@ -73,14 +73,16 @@ const CollegePrediction = (props) => {
 
   
         const [data,setData]=useState([50])
-
+        const [loading,toggleLoading]=useState(false)
         const callSat =() =>{
+          toggleLoading(true)
           var url = `http://localhost:8000/satpredict?clg=${initialState.SCollege}&marks=${initialState.Marks}&gpa=${initialState.GPA}`;
           console.log(url);
           fetch(url)
           .then(res => res.json())
         .then(data => {
           setData(data);
+          toggleLoading(false);
           //console.log(data)
         })
         .catch(rejected => {
@@ -149,7 +151,7 @@ const CollegePrediction = (props) => {
         <div className='container-fluid' style={{padding:0}}>
         <div className='container-fluid' style={{backgroundImage:"url('assets/images/header.png')",backgroundPosition: 'center',
     backgroundSize: 'cover',backgroundRepeat: 'no-repeat'}}>
-        <NavDash/>
+        <NavDash auth={props.auth} logoutUser={props.logoutUser}/>
         </div>
          <Jumbotron style={{paddingTop:'5vh',paddingBottom:'5vh'}}>
                 <div className="container">
@@ -240,12 +242,15 @@ const CollegePrediction = (props) => {
               style={{maxHeight:'100%',width:'200px',height:'200px',display:'block',margin:'auto'}} /> 
               
                    <br/><br/>
+                   {loading?<Spinner type='grow' color = "primary" children={false}/>:<>
                     <h2 style={{alignSelf:'center'}}>
-                    Chances of your getting into <span style={{color:'purple'}}> {initialState.SelectedExam=='SAT'?initialState.SCollege:initialState.GCollege}</span> is <br/><strong style={{alignContent:'center'}}> {percentage}</strong>
+                    Chances of your getting into <span style={{color:'purple'}}> {initialState.SelectedExam=='SAT'?initialState.SCollege:initialState.GCollege}</span> is <br/><strong style={{alignContent:'center'}}> {percentage}%</strong>
                     <br/><br/>
                     
                     </h2>
                     Explore <a href=''>more</a> about this University.
+                    </>
+                    }
                 </ModalBody>
                 <ModalFooter style={{alignItems:'center'}} className='justify-content-center'>
                     <Button color="primary" onClick={toggle}>Use Again</Button>

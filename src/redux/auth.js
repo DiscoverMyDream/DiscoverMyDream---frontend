@@ -2,7 +2,7 @@ import * as ActionTypes from './actionTypes';
 
 export const Auth = (state = {
     isLoading: false,
-    isAuthenticated: /*localStorage.getItem('token') ? true : false*/true,
+    isAuthenticated: localStorage.getItem('token') ? true : false,
     token: localStorage.getItem('token'),
     user: localStorage.getItem('creds') ? JSON.parse(localStorage.getItem('creds')) : null,
     errMess: null,
@@ -10,13 +10,16 @@ export const Auth = (state = {
 }, action) => {
     switch (action.type) {
         case ActionTypes.LOGIN_REQUEST:
+            console.log("request");
             return {
+                
                 ...state,
                 isLoading: true,
                 isAuthenticated: false,
                 user: action.creds
             };
         case ActionTypes.LOGIN_SUCCESS:
+            console.log("success");
             return {
                 ...state,
                 isLoading: false,
@@ -26,6 +29,7 @@ export const Auth = (state = {
                 isAdmin: action.isAdmin
             };
         case ActionTypes.LOGIN_FAILURE:
+            console.log("fail");
             return {
                 ...state,
                 isLoading: false,
@@ -33,12 +37,14 @@ export const Auth = (state = {
                 errMess: action.message
             };
         case ActionTypes.LOGOUT_REQUEST:
+            console.log("outrequest");
             return {
                 ...state,
                 isLoading: true,
                 isAuthenticated: true
             };
         case ActionTypes.LOGOUT_SUCCESS:
+            console.log("outsuccess");
             return {
                 ...state,
                 isLoading: false,

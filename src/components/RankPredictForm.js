@@ -22,14 +22,16 @@ const RankPredictForm = (props) => {
     })
 
     const [data,setData]=useState([1,1,1])
-
+    const [loading,toggleLoading]=useState(false)
     const callM =() =>{
+      toggleLoading(true)
       var url = `http://localhost:8000/mainspredict?marks=${initialState.Marks}&totalMarks=${300}&category=${initialState.Category}`;
       console.log(url);
       fetch(url)
       .then(res => res.json())
     .then(data => {
       setData(data);
+      toggleLoading(false);
       //console.log(data)
     })
     .catch(rejected => {
@@ -37,16 +39,19 @@ const RankPredictForm = (props) => {
     })
   }
   const callA =() =>{
+    toggleLoading(true)
     var url = `http://localhost:8000/advancepredict?marks=${initialState.Marks}&totalMarks=${372}&category=${initialState.Category}`
     fetch(url)
     .then(res => res.json())
   .then(data => {
     setData(data);
+    toggleLoading(false);
     //console.log(data)
   })
   .catch(rejected => {
       console.log(rejected);
   })
+  
 }
     const [modal, setModal] = React.useState(false);
   
@@ -80,7 +85,7 @@ const RankPredictForm = (props) => {
         <div className='container-fluid' style={{padding:0}}>
             <div className='container-fluid' style={{backgroundImage:"url('assets/images/header.png')",backgroundPosition: 'center',
         backgroundSize: 'cover',backgroundRepeat: 'no-repeat'}}>
-            <NavDash/>
+            <NavDash auth={props.auth} logoutUser={props.logoutUser}/>
             </div>
              <Jumbotron style={{paddingTop:'5vh',paddingBottom:'5vh'}}>
                     <div className="container">
@@ -151,12 +156,13 @@ const RankPredictForm = (props) => {
               style={{maxHeight:'100%',width:'200px',height:'200px',display:'block',margin:'auto'}} /> 
               
                    <br/><br/>
+                   {loading?<Spinner type='grow' color = "primary" children={false}/>:
                     <h2 style={{alignSelf:'center'}}>
                     Predicted {initialState.SelectedExam} Rank is <br/><strong style={{alignContent:'center'}}> {rank}</strong>
                     <br/><br/>
                     {/*initialState.SelectedExam=='JEE Mains'? <span>Approximate Percentile is<br/><strong style={{alignContent:'center'}}> ~99.2235</strong></span>:<span></span>*/}
                     Your rank is between {low} and {high}
-                    </h2>
+                    </h2>}
                 </ModalBody>
                 <ModalFooter style={{alignItems:'center'}} className='justify-content-center'>
                     <Button color="primary" onClick={toggle}>Use Again</Button>

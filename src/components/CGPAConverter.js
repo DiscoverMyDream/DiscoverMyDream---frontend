@@ -56,16 +56,19 @@ const CGPAConverter = (props) => {
     }
     const [showGpa,setShowGpa]=useState(false);
     const [data,setData]=useState([10,'A'])
+    const [loading,toggleLoading]=useState(false)
     const convert= () => {
         setShowGpa(true);
         call();
     }
     const call =() =>{
+      toggleLoading(true)
       var url = 'http://localhost:8000/gradeConvert?cgpa='+initialState.CGPA;
       fetch(url)
       .then(res => res.json())
     .then(data => {
       setData(data);
+      toggleLoading(false);
       //console.log(data)
     })
     .catch(rejected => {
@@ -137,7 +140,7 @@ const CGPAConverter = (props) => {
             <div className='row center justify-content-center'>
             <div className="col-md-5" id='show_gpa'>
               
-                {showGpa?<div className="well" ><p style={{fontSize:'130%'}} >As per the 4 point scale, your GPA is <b>{GPA}</b></p><p style={{fontSize:'130%'}}>Your grade is <b>{grad}</b></p></div>:<div class="well grey-bg text-white" style={{backgroundColor:'#186344',fontSize:'130%'}}>Enter CGPA to check GPA &amp; Grade</div>}
+                {showGpa?loading?<Spinner type='grow' color = "primary" children={false}/>:<div className="well" ><p style={{fontSize:'130%'}} >As per the 4 point scale, your GPA is <b>{GPA}</b></p><p style={{fontSize:'130%'}}>Your grade is <b>{grad}</b></p></div>:<div class="well grey-bg text-white" style={{backgroundColor:'#186344',fontSize:'130%'}}>Enter CGPA to check GPA &amp; Grade</div>}
             </div>
             
                 

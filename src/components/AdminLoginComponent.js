@@ -5,6 +5,7 @@ import {
   Button,
   FormFeedback,Spinner,UncontrolledAlert,Alert
 } from 'reactstrap';
+import { Link, useHistory, withRouter } from "react-router-dom"; 
 
 const LoginForm = props => {
   
@@ -16,6 +17,17 @@ const LoginForm = props => {
     Password: false,
 }
 })
+
+const history= useHistory();
+useEffect(() => {
+  console.log('auth',props.auth.isAuthenticated)
+    if (props.auth.isAuthenticated && props.auth.isAdmin) history.push('/home');
+   
+ })
+ const [showmsg, setShowMsg] = useState(true);
+ const dismissAlert = () =>{
+  setShowMsg(false)
+}
 
 const handleInputChange =(event) =>{
   
@@ -34,7 +46,26 @@ const handleInputChange =(event) =>{
 const handleSubmit = (event) => {
   event.preventDefault();
   //alert("EmailId: " +initialState.EmailId)
+  props.loginUser({email : initialState.EmailId, password: initialState.Password})
+  setShowMsg(true)
 }
+
+var err
+        if(props.auth.errMess){
+            err =JSON.parse(props.auth.errMess.message)}
+            else{
+              err={error:''}
+            }
+        const view= !(props.auth.isAuthenticated)?
+              props.auth.isLoading ?
+              <div style={{textAlign:'center'}}><Spinner type='grow' color = "primary" children={false}/></div>:
+              props.auth.errMess ?
+              <div style={{ textAlign:'center'}}>
+              <Alert color='danger' isOpen={showmsg} toggle={dismissAlert}>
+              <h5>{err.error}</h5>
+              </Alert>
+              </div>:
+              null:null
 
     return(
       <div id="loginform">
@@ -72,8 +103,11 @@ const handleSubmit = (event) => {
          < div id="buttonL" class="rowL">
     <button>Log In</button>
   </div>
+  <Col>
+  {view}
+  </Col>
           </Form>
-        <OtherMethods />
+        {/*<OtherMethods />*/}
       </div>
     )
 };

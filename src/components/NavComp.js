@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink} from 'reactstrap';
 
-const NavComp = () => {
+const NavComp = (props) => {
     const [collapsed, setCollapsed] = useState(true);
 
     const toggleNavbar = () => setCollapsed(!collapsed);
+    const handleLogoutClick = () => {
+      props.logoutUser();
+    }
     return (
         
         <div>
@@ -32,17 +35,19 @@ const NavComp = () => {
               <NavLink style={{color:'#FEFAFA',paddingRight:'5.5vw'}}  href="/home">Home</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink style={{color:'#FEFAFA',paddingRight:'5.5vw'}}  href="">About</NavLink>
+              <NavLink style={{color:'#FEFAFA',paddingRight:'5.5vw'}}  href="">Colleges</NavLink>
             </NavItem>
+            {!(props.auth.isAuthenticated)?<>
             <NavItem>
               <NavLink style={{color:'#FEFAFA',paddingRight:'5.5vw'}}  href="/studentLogin">Student</NavLink>
             </NavItem>
             <NavItem>
               <NavLink style={{color:'#FEFAFA',paddingRight:'1.5vw'}}  href="/adminLogin">Admin</NavLink>
             </NavItem>
+            </>:
             <NavItem>
-              <NavLink style={{color:'#FEFAFA',paddingRight:'1.5vw'}}  href="/CollegePage">Colleges</NavLink>
-            </NavItem>
+            <NavLink style={{color:'red',paddingRight:'2vw'}}  onClick={handleLogoutClick} className='logoutt'>Logout </NavLink>
+          </NavItem>}
           </Nav>
         </Collapse>
         {/*</div>*/}

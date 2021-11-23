@@ -20,7 +20,7 @@ const SLoginForm = props => {
 })
 const history= useHistory();
 useEffect(() => {
-  //console.log('auth',props.auth.isAuthenticated)
+  console.log('auth',props.auth.isAuthenticated)
     if (props.auth.isAuthenticated) history.push('/home');
    
  })
@@ -59,7 +59,7 @@ var err
             }
         const view= !(props.auth.isAuthenticated)?
               props.auth.isLoading ?
-              <div style={{textAlign:'center'}}><Spinner color='primary' /></div>:
+              <div style={{textAlign:'center'}}><Spinner type='grow' color = "primary" children={false}/></div>:
               props.auth.errMess ?
               <div style={{ textAlign:'center'}}>
               <Alert color='danger' isOpen={showmsg} toggle={dismissAlert}>
@@ -107,10 +107,10 @@ var err
   <Col>
   {view}
   </Col>
-  <ForgetButton/>
+  {/*<ForgetButton/>*/}
      <RegisterHere/>
           </Form>
-        <OtherMethods />
+        {/*<OtherMethods />*/}
       </div>
     )
 };

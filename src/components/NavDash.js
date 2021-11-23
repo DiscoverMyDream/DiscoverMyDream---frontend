@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink} from 'reactstrap';
 
-const NavDash = () => {
+const NavDash = (props) => {
     const [collapsed, setCollapsed] = useState(true);
 
     const toggleNavbar = () => setCollapsed(!collapsed);
+    const handleLogoutClick = () => {
+      props.logoutUser();
+    }
     return (
         
         <div>
@@ -33,7 +36,7 @@ const NavDash = () => {
             </NavItem>
             
             <NavItem>
-              <NavLink style={{color:'#FEFAFA',paddingRight:'1.5vw'}}  href="/home">Logout</NavLink>
+              <NavLink style={{color:'red',paddingRight:'1.5vw'}}  onClick={handleLogoutClick} className="logoutt">Logout</NavLink>
             </NavItem>
           </Nav>
         </Collapse>

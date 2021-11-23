@@ -43,6 +43,7 @@ const mapStateToProps = (state) => {
 
 const MainComponent = (props) => {
     useEffect( ()=>{
+        console.log(props.auth)
         fetchSCollege();
     }
     );
@@ -53,15 +54,15 @@ const MainComponent = (props) => {
                         <Redirect to="/home" />
                     </Route>
                     <Route path='/home'>
-                    <Header/>
-                     <LandingPage/>
+                    <Header auth={props.auth} logoutUser={props.logoutUser}/>
+                     <LandingPage />
                 
                     <Footer/>
                     </Route>
             <Route path='/adminLogin'>
-                <Header/>
+                <Header auth={props.auth} logoutUser={props.logoutUser}/>
             <div style={{paddingTop:'7vh',paddingBottom:'7vh',background: 'rgba(229, 241, 234, 0.76)'}}>
-                <LoginForm auth={props.auth.isAuthenticated} loginUser={props.loginUser}/>
+                <LoginForm auth={props.auth} loginUser={props.loginUser}/>
             </div>
             <Footer/>
             </Route>
@@ -75,16 +76,16 @@ const MainComponent = (props) => {
                         />
             */}
             <Route path='/studentLogin'>
-                <Header/>
+                <Header auth={props.auth} logoutUser={props.logoutUser}/>
             <div style={{paddingTop:'7vh',paddingBottom:'7vh',background: 'rgba(229, 241, 234, 0.76)'}}>
-                <SLoginForm auth={props.auth.isAuthenticated} loginUser={props.loginUser}/>
+                <SLoginForm auth={props.auth} loginUser={props.loginUser}/>
             </div>
             <Footer/>
             </Route>
             <Route path='/studentRegister'>
-                <Header/>
+                <Header auth={props.auth} logoutUser={props.logoutUser}/>
             <div style={{paddingTop:'7vh',paddingBottom:'7vh',background: 'rgba(229, 241, 234, 0.76)'}}>
-                <StudentRegisterComponent registerUser={props.registerUser}/>
+                <StudentRegisterComponent registerUser={props.registerUser} register={props.register}/>
             </div>
             <Footer/>
             </Route>
@@ -94,7 +95,7 @@ const MainComponent = (props) => {
                         isAuthenticated={props.auth.isAuthenticated}
                         isAdmin={true}
                         redPath='/studentLogin'
-                        component={()=> <RankPredictForm auth={props.auth.isAuthenticated} mainsPrediction={props.mainsPrediction} advancedPrediction={props.advancedPrediction} getMainsPrediction={props.getMainsPrediction} getAdvancedPrediction={props.getAdvancedPrediction}/>}
+                        component={()=> <RankPredictForm auth={props.auth} logoutUser={props.logoutUser} mainsPrediction={props.mainsPrediction} advancedPrediction={props.advancedPrediction} getMainsPrediction={props.getMainsPrediction} getAdvancedPrediction={props.getAdvancedPrediction}/>}
                         />
             
             <RouteGuard
@@ -103,7 +104,7 @@ const MainComponent = (props) => {
                         isAuthenticated={props.auth.isAuthenticated}
                         isAdmin={true}
                         redPath='/studentLogin'
-                        component={()=> <CollegePrediction auth={props.auth.isAuthenticated} satColleges={props.satColleges} satPrediction={props.satPrediction} gradeConversion={props.gradeConversion} getSatCollegePrediction={props.getSatCollegePrediction} convertGrade={props.convertGrade}/>}
+                        component={()=> <CollegePrediction auth={props.auth} logoutUser={props.logoutUser} satColleges={props.satColleges} satPrediction={props.satPrediction} gradeConversion={props.gradeConversion} getSatCollegePrediction={props.getSatCollegePrediction} convertGrade={props.convertGrade}/>}
                         />
             </Switch>
         </div>
