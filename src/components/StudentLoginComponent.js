@@ -53,17 +53,18 @@ const handleSubmit = (event) => {
 }
 var err
         if(props.auth.errMess){
-            err =JSON.parse(props.auth.errMess.message)}
+            err =(JSON.parse(JSON.parse(JSON.stringify(props.auth.errMess))))}
             else{
-              err={error:''}
+              err={message:''}
             }
+            console.log(err)
         const view= !(props.auth.isAuthenticated)?
               props.auth.isLoading ?
               <div style={{textAlign:'center'}}><Spinner type='grow' color = "primary" children={false}/></div>:
               props.auth.errMess ?
               <div style={{ textAlign:'center'}}>
               <Alert color='danger' isOpen={showmsg} toggle={dismissAlert}>
-              <h5>{err.error}</h5>
+              <h5>{err.message}</h5>
               </Alert>
               </div>:
               null:null

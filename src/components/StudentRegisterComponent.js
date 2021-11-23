@@ -104,6 +104,13 @@ class StudentRegisterComponent extends Component{
      );
      const shouldSubmit = myerrors.ConfirmPassword || myerrors.EmailId || myerrors.FullName || myerrors.Password ||  myerrors.PhoneNo  ;
 
+     var err
+     if(this.props.register.errMess){
+         err =JSON.parse(JSON.parse(JSON.stringify(this.props.register.errMess)))}
+         else{
+           err={message:''}
+         }
+
     return (
         <div id="loginform">
         <h2 id="headerTitle" style={{fontWeight:'bold',fontFamily:'Andada Pro'}}>Student Register</h2>
@@ -196,6 +203,12 @@ class StudentRegisterComponent extends Component{
     <button disabled={shouldSubmit}>Register</button>
     <>
     {this.props.register.isLoading?<div style={{textAlign:'center'}}><Spinner type='grow' color = "primary" children={false}/></div>:
+    this.props.register.errMess?
+    <div style={{ textAlign:'center'}}>
+              <Alert color='danger' >
+              <h5>{err.message}</h5>
+              </Alert>
+              </div>:
     this.props.register.isRegistered?
     <div style={{ textAlign:'center'}}>
               <Alert color='success'>

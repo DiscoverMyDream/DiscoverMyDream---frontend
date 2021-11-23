@@ -403,7 +403,7 @@ export const registerUser = (creds) => (dispatch) => {
                 dispatch(receiveRegister());
             
         })
-        .catch(error => dispatch(registerError(error)))
+        .catch(error => dispatch(registerError(error.message)))
 };
 
 
@@ -423,6 +423,7 @@ export const receiveLogin = (response) => {
 }
 
 export const loginError = (message) => {
+    console.log(message);
     return {
         type: ActionTypes.LOGIN_FAILURE,
         message
@@ -445,9 +446,7 @@ export const loginUser = (creds) => (dispatch) => {
                 
                 return response;
             } else {
-                var error = new Error('Error ' + response.status + ': ' + response.statusText);
-                error.response = response;
-                throw error;
+                return response.text().then(text => {throw Error(text)})
             }
         },
             error => {
@@ -469,6 +468,7 @@ export const loginUser = (creds) => (dispatch) => {
             else {
                 var error = new Error('Error ');
                 error.response = response;
+                console.log(error);
                 throw error;
             }
         })
