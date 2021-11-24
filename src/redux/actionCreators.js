@@ -348,6 +348,139 @@ export const fetchSCollege = () => (dispatch) => {
         .catch(error => dispatch(sCollegeFailed(error.message)));
 }
 
+export const listColleges = (keyword = '', pageNumber = '') => async (dispatch) => {
+    try {
+      dispatch({ type: ActionTypes.COLLEGE_LIST_REQUEST })
+  
+      const { data } = await axios.get(baseUrl+`/api/colleges?keyword=${keyword}&pageNumber=${pageNumber}`);
+  
+      dispatch({
+        type: ActionTypes.COLLEGE_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ActionTypes.COLLEGE_LIST_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.response,
+      });
+    }
+  };
+
+  export const deleteCollege = (id) => async (dispatch) => {
+    try {
+      dispatch({
+        type: ActionTypes.COLLEGE_DELETE_REQUEST,
+      });
+  
+      const bearer = 'Bearer ' + localStorage.getItem('token');
+  
+      const config = {
+        headers: {
+          Authorization: bearer,
+        },
+      };
+  
+      await axios.delete(baseUrl+`/api/colleges/${id}`, config);
+  
+      dispatch({
+        type: ActionTypes.COLLEGE_DELETE_SUCCESS,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logoutUser())
+      }
+      dispatch({
+        type: ActionTypes.COLLEGE_DELETE_FAIL,
+        payload: message,
+      });
+    }
+  }; 
+
+  export const createCollege = () => async (dispatch) => {
+    try {
+      dispatch({
+        type: ActionTypes.COLLEGE_CREATE_REQUEST,
+      });
+  
+      const bearer = 'Bearer ' + localStorage.getItem('token');
+  
+  
+      const config = {
+        headers: {
+          Authorization: bearer,
+        },
+      };
+  
+      const { data } = await axios.post(baseUrl+`/api/colleges`, {}, config);
+  
+      dispatch({
+        type: ActionTypes.COLLEGE_CREATE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logoutUser())
+      }
+      dispatch({
+        type: ActionTypes.COLLEGE_CREATE_FAIL,
+        payload: message,
+      });
+    }
+  };
+  
+  export const updateCollege = (college) => async (dispatch) => {
+    try {
+      dispatch({
+        type: ActionTypes.COLLEGE_UPDATE_REQUEST,
+      });
+  
+      const bearer = 'Bearer ' + localStorage.getItem('token');
+  
+  
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: bearer,
+        },
+      };
+  
+      const { data } = await axios.put(
+       baseUrl+ `/api/colleges/${college._id}`,
+        college,
+        config
+      );
+  
+      dispatch({
+        type: ActionTypes.COLLEGE_UPDATE_SUCCESS,
+        payload: data,
+      });
+      dispatch({ type: ActionTypes.COLLEGE_DETAILS_SUCCESS, payload: data });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logoutUser())
+      }
+      dispatch({
+        type: ActionTypes.COLLEGE_UPDATE_FAIL,
+        payload: message,
+      });
+    }
+  }
+
 export const listCollegeDetails = (id) => async (dispatch) => {
     try {
       dispatch({ type: ActionTypes.COLLEGE_DETAILS_REQUEST });
@@ -521,3 +654,179 @@ export const logoutUser = () => (dispatch) => {
 
     dispatch(receiveLogout())
 }
+
+export const getUserDetails = (id) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: ActionTypes.USER_DETAILS_REQUEST,
+      });
+  
+      const bearer = 'Bearer ' + localStorage.getItem('token');
+  
+      const config = {
+        headers: {
+          Authorization: bearer,
+        },
+      };
+  
+      const { data } = await axios.get(baseUrl+`/api/users/${id}`, config);
+  
+      dispatch({
+        type: ActionTypes.USER_DETAILS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logoutUser())
+      }
+      dispatch({
+        type: ActionTypes.USER_DETAILS_FAIL,
+        payload: message,
+      });
+    }
+  };
+  
+  export const updateUserProfile = (user) => async (dispatch) => {
+    try {
+      dispatch({
+        type: ActionTypes.USER_UPDATE_PROFILE_REQUEST,
+      });
+  
+      const bearer = 'Bearer ' + localStorage.getItem('token');
+  
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: bearer,
+        },
+      };
+  
+      const { data } = await axios.put(baseUrl+`/api/users/profile`, user, config);
+  
+      dispatch({
+        type: ActionTypes.USER_UPDATE_PROFILE_SUCCESS,
+        payload: data,
+      });
+      dispatch(receiveLogin());
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logoutUser())
+      }
+      dispatch({
+        type: ActionTypes.USER_UPDATE_PROFILE_FAIL,
+        payload: message,
+      });
+    }
+  };
+  
+  export const listUsers = () => async (dispatch) => {
+    try {
+      dispatch({
+        type: ActionTypes.USER_LIST_REQUEST,
+      });
+  
+      const bearer = 'Bearer ' + localStorage.getItem('token');
+  
+      const config = {
+        headers: {
+          Authorization: bearer,
+        },
+      };
+  
+      const { data } = await axios.get(baseUrl+`/api/users`, config);
+  
+      dispatch({
+        type: ActionTypes.USER_LIST_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logoutUser())
+      }
+      dispatch({
+        type: ActionTypes.USER_LIST_FAIL,
+        payload: message,
+      });
+    }
+  };
+  
+  export const deleteUser = (id) => async (dispatch) => {
+    try {
+      dispatch({
+        type: ActionTypes.USER_DELETE_REQUEST,
+      });
+  
+      const bearer = 'Bearer ' + localStorage.getItem('token');
+  
+      const config = {
+        headers: {
+          Authorization: bearer,
+        },
+      };
+  
+      await axios.delete(baseUrl+`/api/users/${id}`, config);
+  
+      dispatch({ type: ActionTypes.USER_DELETE_SUCCESS });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logoutUser())
+      }
+      dispatch({
+        type: ActionTypes.USER_DELETE_FAIL,
+        payload: message,
+      });
+    }
+  };
+  
+  export const updateUser = (user) => async (dispatch) => {
+    try {
+      dispatch({
+        type: ActionTypes.USER_UPDATE_REQUEST,
+      });
+  
+      const bearer = 'Bearer ' + localStorage.getItem('token');
+  
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: bearer,
+        },
+      };
+  
+      const { data } = await axios.put(baseUrl+`/api/users/${user._id}`, user, config);
+  
+      dispatch({ type: ActionTypes.USER_UPDATE_SUCCESS });
+  
+      dispatch({ type: ActionTypes.USER_DETAILS_SUCCESS, payload: data });
+      
+      dispatch({ type: ActionTypes.USER_DETAILS_RESET });    
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logoutUser())
+      }
+      dispatch({
+        type: ActionTypes.USER_UPDATE_FAIL,
+        payload: message,
+      });
+    }
+  };

@@ -31,15 +31,15 @@ const CollegeListPage = ({ history, match }) => {
     college: createdcollege,
   } = collegeCreate;
 
-  const userLogin = useSelector((state) => state.auth);
-  const { userInfo } = userLogin;
+  const auth = useSelector((state) => state.auth);
+  
 
   useEffect(() => {
     dispatch({ type: COLLEGE_CREATE_RESET });
 
-    if (!userInfo || !userInfo.isAdmin) {
+    /*if (!auth || !auth.isAdmin) {
       history.push("/login");
-    }
+    }*/
 
     if (successCreate) {
       history.push(`/admin/colleges/${createdcollege._id}/edit`);
@@ -49,7 +49,7 @@ const CollegeListPage = ({ history, match }) => {
   }, [
     dispatch,
     history,
-    userInfo,
+    auth,
     successDelete,
     successCreate,
     createdcollege,

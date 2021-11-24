@@ -8,7 +8,10 @@ import SLoginForm from './StudentLoginComponent';
 import StudentRegisterComponent from './StudentRegisterComponent';
 import RankPredictForm from './RankPredictForm';
 import CollegePrediction from './CollegePrediction';
-
+import UserListPage from "./UserListPage";
+import UserEditPage from "./UserEditPage";
+import CollegeListPage from "./CollegeListPage";
+import CollegeEditPage from "./CollegeEditPage";
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import{getMainsPrediction,getAdvancedPrediction,getSatCollegePrediction,registerUser,loginUser,fetchSCollege,updateSCollege,deleteSCollege,postSCollege,logoutUser, convertGrade} from '../redux/actionCreators';
@@ -87,6 +90,29 @@ const MainComponent = (props) => {
                         component={AdminComponent}
                         />
             */}
+                      <RouteGuard exact path="/admin/userlist" 
+                      isAuthenticated={props.auth.isAuthenticated}
+                        isAdmin={props.auth.isAdmin}
+                        redPath='/adminLogin' component={UserListPage} />
+
+                        <RouteGuard exact path="/admin/user/:id/edit" 
+                        isAuthenticated={props.auth.isAuthenticated}
+                        isAdmin={props.auth.isAdmin}
+                        redPath='/adminLogin' component={UserEditPage} />
+                    <Route exact path="/admin/collegelist" 
+                    /*isAuthenticated={props.auth.isAuthenticated}
+                        isAdmin={props.auth.isAdmin}*/
+                        redPath='/adminLogin' component={CollegeListPage} exact/>
+
+                    <RouteGuard exact path="/admin/collegelist/:pageNumber" 
+                    isAuthenticated={props.auth.isAuthenticated}
+                        isAdmin={props.auth.isAdmin}
+                        redPath='/adminLogin' component={CollegeListPage} exact/>
+
+                    <RouteGuard exact path="/admin/college/:id/edit" 
+                    isAuthenticated={props.auth.isAuthenticated}
+                        isAdmin={props.auth.isAdmin}
+                        redPath='/adminLogin' component={CollegeEditPage} />
             <Route path='/studentLogin'>
                 <Header auth={props.auth} logoutUser={props.logoutUser}/>
             <div style={{paddingTop:'7vh',paddingBottom:'7vh',background: 'rgba(229, 241, 234, 0.76)'}}>

@@ -11,7 +11,8 @@ import { SatColleges } from './satColleges';
 import { SatPrediction } from './satPrediction';
 import { userUpdateProfileReducer } from './updateprofile';
 import { userDeleteReducer, userListReducer, userUpdateReducer } from './userupdate';
-import { collegeDetailsReducer } from "./collegedetails";
+import { collegeDetailsReducer,collegeListReducer } from "./collegedetails";
+import { collegeCreateReducer,collegeDeleteReducer,collegeUpdateReducer } from "./collegeupdate";
 
 
 export const ConfigureStore = () => {
@@ -25,6 +26,10 @@ export const ConfigureStore = () => {
             userupdate: userUpdateReducer,
             userupdateprofile: userUpdateProfileReducer,
             collegeDetails: collegeDetailsReducer,
+            collegeList: collegeListReducer,
+            collegeDelete: collegeDeleteReducer,
+            collegeCreate: collegeCreateReducer,
+            collegeUpdate: collegeUpdateReducer,
             satColleges: SatColleges,
             satPrediction: SatPrediction,
             //gmatColleges: GmatColleges,

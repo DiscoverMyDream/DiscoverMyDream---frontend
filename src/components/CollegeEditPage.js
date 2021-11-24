@@ -7,7 +7,7 @@ import Message from "./Message";
 import Loader from "./Loader";
 import FormContainer from "./FormContainer";
 import { listCollegeDetails, updateCollege } from "../redux/actionCreators";
-
+import {  COLLEGE_UPDATE_RESET} from "../redux/actionTypes";
 
 const CollegeEditPage = ({ match, history }) => {
   const collegeId = match.params.id;
@@ -34,7 +34,7 @@ const CollegeEditPage = ({ match, history }) => {
 
   useEffect(() => {
     if (successUpdate) {
-      dispatch({ type: college_UPDATE_RESET });
+      dispatch({ type: COLLEGE_UPDATE_RESET });
       history.push("/admin/collegelist");
     } else {
       if (!college.name || college._id !== collegeId) {

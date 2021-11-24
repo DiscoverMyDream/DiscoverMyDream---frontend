@@ -4,7 +4,7 @@ import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "./Message";
 import Loader from "./Loader";
-import FormContainer from "FormContainer";
+import FormContainer from "./FormContainer";
 import { USER_UPDATE_RESET } from "../redux/actionTypes";
 import { getUserDetails, updateUser } from "../redux/actionCreators";
 
