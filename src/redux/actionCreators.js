@@ -1,4 +1,5 @@
 import * as ActionTypes from './actionTypes';
+import axios from 'axios';
 const basePUrl= 'http://localhost:8000'
 const baseUrl = 'http://localhost:5000'
 
@@ -193,7 +194,7 @@ export const sCollegeFailed = (errmess) => ({
 });
 
 export const sCollegeSuccess = (clgList) => {
-    //console.log(watchlist.watchlist)
+   
     return {
     type: ActionTypes.SCOLLEGE_SUCCESS,
     payload: clgList
@@ -317,11 +318,12 @@ export const updateSCollege = (clg) => (dispatch) => {
 }
 
 export const fetchSCollege = () => (dispatch) => {
+    console.log("yo")
     dispatch(sCollegeLoading(true));
 
    
 
-    return fetch(baseUrl + 'colleges', {
+    return fetch(baseUrl + '/api/colleges', {
         headers: {
             'method': 'GET',
         
@@ -345,6 +347,28 @@ export const fetchSCollege = () => (dispatch) => {
         .then(clgs => dispatch(sCollegeSuccess(clgs)))
         .catch(error => dispatch(sCollegeFailed(error.message)));
 }
+
+export const listCollegeDetails = (id) => async (dispatch) => {
+    try {
+      dispatch({ type: ActionTypes.COLLEGE_DETAILS_REQUEST });
+  
+      const { data } = await axios.get(baseUrl+`/api/colleges/${id}`);
+  
+      dispatch({
+        type: ActionTypes.COLLEGE_DETAILS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ActionTypes.COLLEGE_DETAILS_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+  
 
 export const requestRegister = (creds) => {
     return {
@@ -385,7 +409,7 @@ export const registerUser = (creds) => (dispatch) => {
                 return response;
             }
              else {
-                return response.text().then(text => {throw Error(text)})
+                return response.json().then(text => {throw Error(text)})
             }
         },
             error => {

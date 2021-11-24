@@ -105,11 +105,11 @@ class StudentRegisterComponent extends Component{
      const shouldSubmit = myerrors.ConfirmPassword || myerrors.EmailId || myerrors.FullName || myerrors.Password ||  myerrors.PhoneNo  ;
 
      var err
-     if(this.props.register.errMess){
-         err =JSON.parse(JSON.parse(JSON.stringify(this.props.register.errMess)))}
-         else{
-           err={message:''}
-         }
+    /* if(this.props.register.errMess){
+         err =JSON.parse((this.props.register.errMess).toString())}
+         else{*/
+           err={message:'User already exists'}
+        // }
 
     return (
         <div id="loginform">

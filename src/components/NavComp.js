@@ -35,7 +35,7 @@ const NavComp = (props) => {
               <NavLink style={{color:'#FEFAFA',paddingRight:'5.5vw'}}  href="/home">Home</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink style={{color:'#FEFAFA',paddingRight:'5.5vw'}}  href="">Colleges</NavLink>
+              <NavLink style={{color:'#FEFAFA',paddingRight:'5.5vw'}}  href="/colleges">Colleges</NavLink>
             </NavItem>
             {!(props.auth.isAuthenticated)?<>
             <NavItem>

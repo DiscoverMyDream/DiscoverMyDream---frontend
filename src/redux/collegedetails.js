@@ -14,7 +14,7 @@ export const collegeListReducer = (state = { colleges: [] }, action) => {
   };
   
   export const collegeDetailsReducer = (
-    state = { college: { reviews: [] } },
+    state = { college: { } },
     action
   ) => {
     switch (action.type) {

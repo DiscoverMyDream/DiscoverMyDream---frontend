@@ -31,7 +31,7 @@ const CollegeListPage = ({ history, match }) => {
     college: createdcollege,
   } = collegeCreate;
 
-  const userLogin = useSelector((state) => state.userLogin);
+  const userLogin = useSelector((state) => state.auth);
   const { userInfo } = userLogin;
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const CollegeListPage = ({ history, match }) => {
     }
 
     if (successCreate) {
-      history.push(`/admin/college/${createdcollege._id}/edit`);
+      history.push(`/admin/colleges/${createdcollege._id}/edit`);
     } else {
       dispatch(listColleges('', pageNumber));
     }

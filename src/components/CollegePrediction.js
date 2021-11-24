@@ -1,5 +1,6 @@
 import React,{useState} from 'react';
 import { Jumbotron } from 'reactstrap';
+import { useDispatch, useSelector } from 'react-redux'
 import Header from "./Header";
 import Footer from './Footer';
 import {
@@ -37,6 +38,7 @@ const CollegePrediction = (props) => {
         SCollege:'California Institute of Technology',
         GCollege:'Stanford GSB',
         GPA: '',
+        clgLink: '',
         touched: {
         Marks:false,
         GPA:false
@@ -44,6 +46,34 @@ const CollegePrediction = (props) => {
     })
     const [modal, setModal] = React.useState(false);
   
+    const dispatch = useDispatch()
+
+    const collegeDetails = useSelector((state) => state.satColleges);
+  const { isLoading, errMess, sColleges,pages,page } = collegeDetails;
+  const clgs = [];
+  for (const [key, value] of Object.entries(sColleges)) {
+    //console.log(`${key}: ${JSON.stringify(value)}`);
+    clgs.push({
+        _id: value._id,
+      name: value.name,
+      description: value.description,
+      image: value.image,
+      collegelink: value.collegelink
+    })
+    //console.log(clgs)
+  }
+  
+  const clgList=[]
+ for (const key of clgs){
+   clgList.push(key.name)
+ }
+ console.log(clgList)
+const clgLink = clgs.filter((clg) => (clg.name === initialState.SCollege))[0]
+console.log(clgLink)
+if (clgLink){
+  console.log(clgLink.collegelink)
+}
+
     const toggle = () => setModal(!modal);
     const selectCollege = (event)=>{
       setState({
@@ -140,7 +170,7 @@ const CollegePrediction = (props) => {
         'Carnegie Mellon Tepper',
       ]
       const clgL=initialState.SelectedExam=='SAT'?satClg:gmatClg
-    const pairList = clgL.map((k) => {
+    const pairList = clgList.map((k) => {
         return (
             <option key={k} value={k}>{k}</option>
         )
@@ -248,7 +278,7 @@ const CollegePrediction = (props) => {
                     <br/><br/>
                     
                     </h2>
-                    Explore <a href=''>more</a> about this University.
+                    Explore <a href={clgLink?clgLink.collegelink:''} target='_blank'>more</a> about this University.
                     </>
                     }
                 </ModalBody>

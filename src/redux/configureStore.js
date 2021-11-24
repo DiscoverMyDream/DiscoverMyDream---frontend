@@ -11,7 +11,7 @@ import { SatColleges } from './satColleges';
 import { SatPrediction } from './satPrediction';
 import { userUpdateProfileReducer } from './updateprofile';
 import { userDeleteReducer, userListReducer, userUpdateReducer } from './userupdate';
-
+import { collegeDetailsReducer } from "./collegedetails";
 
 
 export const ConfigureStore = () => {
@@ -24,6 +24,7 @@ export const ConfigureStore = () => {
             userdelete: userDeleteReducer,
             userupdate: userUpdateReducer,
             userupdateprofile: userUpdateProfileReducer,
+            collegeDetails: collegeDetailsReducer,
             satColleges: SatColleges,
             satPrediction: SatPrediction,
             //gmatColleges: GmatColleges,

@@ -121,6 +121,7 @@ const RankPredictForm = (props) => {
                     value={initialState.Marks}
                     onChange={handleInputChange} 
                     placeholder="Enter your Marks"
+                    max={initialState.SelectedExam=='JEE Mains'?300:372}
                     required
                     style={{width:'100%'}}
                   />

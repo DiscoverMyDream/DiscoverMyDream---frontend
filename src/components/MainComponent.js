@@ -14,6 +14,8 @@ import { connect } from 'react-redux';
 import{getMainsPrediction,getAdvancedPrediction,getSatCollegePrediction,registerUser,loginUser,fetchSCollege,updateSCollege,deleteSCollege,postSCollege,logoutUser, convertGrade} from '../redux/actionCreators';
 
 import  RouteGuard from './RouteGuard'
+import CollegePage from './CollegePage';
+import CollegeScreen from './CollegeScreen';
 const mapDispatchToProps = (dispatch) => ({
 
     getMainsPrediction: (info) => dispatch(getMainsPrediction(info)),
@@ -44,8 +46,9 @@ const mapStateToProps = (state) => {
 const MainComponent = (props) => {
     useEffect( ()=>{
         console.log(props.auth)
-        fetchSCollege();
-    }
+        props.fetchSCollege();
+        console.log(props.satColleges.sColleges)
+    },[]
     );
     return (
         <div className="container-full-bg">
@@ -59,6 +62,12 @@ const MainComponent = (props) => {
                 
                     <Footer/>
                     </Route>
+                    <Route exact path='/colleges'>
+                    <Header auth={props.auth} logoutUser={props.logoutUser}/>
+                     <CollegeScreen/>
+                
+                    <Footer/>
+                    </Route>
             <Route path='/adminLogin'>
                 <Header auth={props.auth} logoutUser={props.logoutUser}/>
             <div style={{paddingTop:'7vh',paddingBottom:'7vh',background: 'rgba(229, 241, 234, 0.76)'}}>
@@ -66,6 +75,9 @@ const MainComponent = (props) => {
             </div>
             <Footer/>
             </Route>
+            <Route exact path="/colleges/:id" component={CollegePage} />
+            
+          
             {/*<RouteGuard
                         exact
                         path='/admin'
@@ -106,6 +118,7 @@ const MainComponent = (props) => {
                         redPath='/studentLogin'
                         component={()=> <CollegePrediction auth={props.auth} logoutUser={props.logoutUser} satColleges={props.satColleges} satPrediction={props.satPrediction} gradeConversion={props.gradeConversion} getSatCollegePrediction={props.getSatCollegePrediction} convertGrade={props.convertGrade}/>}
                         />
+                        <Redirect to="/home" />
             </Switch>
         </div>
     );
