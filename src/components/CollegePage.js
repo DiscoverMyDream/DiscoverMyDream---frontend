@@ -14,16 +14,17 @@ import {
 import Message from "./Message";
 import Loader from "./Loader";
 import Meta from "./Meta";
-import { fetchSCollege, listCollegeDetails } from "../redux/actionCreators";
+import { fetchSCollege, listCollegeDetails,logoutUser  } from "../redux/actionCreators";
 import { Container } from "reactstrap";
-
+import Header from "./Header";
+import Footer from "./Footer";
 
 
 const CollegePage = ({ match }) => {
 
 //const [Col,setClg]=useState({_id:null});
   const dispatch = useDispatch();
-
+  const auth = useSelector((state) => state.auth);
   //const userLogin = useSelector((state) => state.satColleges.sColleges.colleges);
   
   //const { name } = userLogin;
@@ -126,7 +127,7 @@ const history= useHistory();
     });*/
   return (
     <>
-    
+    <Header auth={auth} logoutUser={dispatch(logoutUser)}/>
       <Link className="btn btn-light my-3" to="/colleges">
         Go Back
     </Link>
@@ -159,6 +160,7 @@ const history= useHistory();
           </Col>
         </Row>
         </Container>
+        <Footer/>
         </>
       )
       }

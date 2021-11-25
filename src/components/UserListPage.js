@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { Table, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "./Message";
 import Loader from "./Loader";
-import { deleteUser, listUsers } from "../redux/actionCreators";
-
+import { deleteUser, listUsers ,logoutUser} from "../redux/actionCreators";
+import Header from "./Header";
+import Footer from "./Footer";
 
 const UserListPage = ({ history }) => {
   const dispatch = useDispatch();
@@ -13,19 +15,21 @@ const UserListPage = ({ history }) => {
   const userList = useSelector((state) => state.userList);
   const { loading, error, users } = userList;
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const auth = useSelector((state) => state.auth);
+
+ // const userLogin = useSelector((state) => state.userLogin);
+ // const { userInfo } = userLogin;
 
   const userDelete = useSelector((state) => state.userDelete);
   const { success: successDelete } = userDelete;
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
+    if (auth && auth.isAdmin) {
       dispatch(listUsers());
     } else {
-      history.push("/login");
+      history.push("/adminLogin");
     }
-  }, [dispatch, history, successDelete, userInfo]);
+  }, [dispatch, history, successDelete, auth]);
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure")) {
@@ -35,6 +39,10 @@ const UserListPage = ({ history }) => {
 
   return (
     <>
+    <Header auth={auth} logoutUser={dispatch(logoutUser)}/>
+    <Link to="/admin" className="btn btn-info my-3">
+        Go to Dashboard
+      </Link>
       <h1>Users</h1>
       {loading ? (
         <Loader />
@@ -85,6 +93,7 @@ const UserListPage = ({ history }) => {
           </tbody>
         </Table>
       )}
+      <Footer/>
     </>
   );
 };

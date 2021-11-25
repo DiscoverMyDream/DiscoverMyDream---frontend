@@ -97,7 +97,7 @@ const CollegeEditPage = ({ match, history }) => {
   return (
     <>
     <Header auth={auth} logoutUser={dispatch(logoutUser)}/>
-      <Link to="/admin/collegelist" className="btn btn-light my-3">
+      <Link to="/admin/collegelist" className="btn btn-dark my-3">
         Go Back
       </Link>
       <FormContainer>

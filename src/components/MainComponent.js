@@ -21,6 +21,7 @@ import{getMainsPrediction,getAdvancedPrediction,getSatCollegePrediction,register
 import  RouteGuard from './RouteGuard'
 import CollegePage from './CollegePage';
 import CollegeScreen from './CollegeScreen';
+
 const mapDispatchToProps = (dispatch) => ({
 
     getMainsPrediction: (info) => dispatch(getMainsPrediction(info)),
@@ -88,7 +89,8 @@ const MainComponent = (props) => {
                 
                     <Footer/>
             </Route>
-          
+            <Route path="/admin/userlist" component={UserListPage} />
+          <Route path="/admin/user/:id/edit" component={UserEditPage} />
             <RouteGuard
                         exact
                         path='/admin'

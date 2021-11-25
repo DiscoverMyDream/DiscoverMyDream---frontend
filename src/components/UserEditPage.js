@@ -6,7 +6,9 @@ import Message from "./Message";
 import Loader from "./Loader";
 import FormContainer from "./FormContainer";
 import { USER_UPDATE_RESET } from "../redux/actionTypes";
-import { getUserDetails, updateUser } from "../redux/actionCreators";
+import { getUserDetails, updateUser,logoutUser } from "../redux/actionCreators";
+import Header from "./Header";
+import Footer from "./Footer";
 
 const UserEditPage = ({ match, history }) => {
   const userId = match.params.id;
@@ -17,8 +19,8 @@ const UserEditPage = ({ match, history }) => {
 
   const dispatch = useDispatch();
 
-  const userDetails = useSelector((state) => state.userDetails);
-  const { loading, error, user } = userDetails;
+  const userDetails = useSelector((state) => state.auth);
+  const { isLoading, errMess, user } = userDetails;
 
   const userUpdate = useSelector((state) => state.userUpdate);
   const {
@@ -32,7 +34,7 @@ const UserEditPage = ({ match, history }) => {
       dispatch({ type: USER_UPDATE_RESET });
       history.push("/admin/userlist");
     } else {
-      if (!user.name || user._id !== userId) {
+      if (!user || user._id !== userId) {
         dispatch(getUserDetails(userId));
       } else {
         setName(user.name);
@@ -49,17 +51,18 @@ const UserEditPage = ({ match, history }) => {
 
   return (
     <>
-      <Link to="/admin/userlist" className="btn btn-light my-3">
+    <Header auth={userDetails} logoutUser={dispatch(logoutUser)}/>
+      <Link to="/admin/userlist" className="btn btn-dark my-3">
         Go Back
       </Link>
       <FormContainer>
         <h1>Edit User</h1>
         {loadingUpdate && <Loader />}
         {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
-        {loading ? (
+        {isLoading ? (
           <Loader />
-        ) : error ? (
-          <Message variant="danger">{error}</Message>
+        ) : errMess ? (
+          <Message variant="danger">{errMess}</Message>
         ) : (
           <Form onSubmit={submitHandler}>
             <Form.Group controlId="name">
@@ -97,6 +100,7 @@ const UserEditPage = ({ match, history }) => {
           </Form>
         )}
       </FormContainer>
+      <Footer/>
     </>
   );
 };

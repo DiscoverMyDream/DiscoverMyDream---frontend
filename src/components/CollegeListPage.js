@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { Table, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import Message from "./Message"
 import Loader from "./Loader"
 import { COLLEGE_CREATE_RESET } from "../redux/actionTypes";
@@ -72,6 +73,9 @@ const CollegeListPage = ({ history, match }) => {
   return (
     <>
     <Header auth={auth} logoutUser={dispatch(logoutUser)}/>
+    <Link to="/admin" className="btn btn-info my-3">
+        Go to Dashboard
+      </Link>
       <Row className="align-items-center">
         <Col>
           <h1>Colleges</h1>
