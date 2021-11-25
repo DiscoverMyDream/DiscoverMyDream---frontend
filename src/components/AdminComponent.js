@@ -1,16 +1,16 @@
-import React from 'react';
+import React ,{useEffect}from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import { Link } from "react-router-dom";
+import { Link ,useHistory} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {logoutUser  } from "../redux/actionCreators";
 const AdminComponent = () => {
     const dispatch = useDispatch();
-
     const auth = useSelector((state) => state.auth);
+    
     return (
         <>
-        <Header auth={auth} logoutUser={dispatch(logoutUser)}/>
+        <Header auth={auth} logoutUser={logoutUser}/>
         <h1>Admin</h1>
         <div className='row'>
         <div className='col-md-6'>

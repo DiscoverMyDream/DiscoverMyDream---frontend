@@ -51,7 +51,7 @@ const UserEditPage = ({ match, history }) => {
 
   return (
     <>
-    <Header auth={userDetails} logoutUser={dispatch(logoutUser)}/>
+    <Header auth={userDetails} logoutUser={logoutUser}/>
       <Link to="/admin/userlist" className="btn btn-dark my-3">
         Go Back
       </Link>

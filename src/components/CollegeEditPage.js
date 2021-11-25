@@ -96,7 +96,7 @@ const CollegeEditPage = ({ match, history }) => {
 
   return (
     <>
-    <Header auth={auth} logoutUser={dispatch(logoutUser)}/>
+    <Header auth={auth} logoutUser={logoutUser}/>
       <Link to="/admin/collegelist" className="btn btn-dark my-3">
         Go Back
       </Link>

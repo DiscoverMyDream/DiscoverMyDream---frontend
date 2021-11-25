@@ -21,7 +21,7 @@ const LoginForm = props => {
 const history= useHistory();
 useEffect(() => {
   console.log('auth',props.auth.isAuthenticated)
-    if (props.auth.isAuthenticated && props.auth.isAdmin) history.push('/home');
+    if (props.auth.isAuthenticated && props.auth.isAdmin) history.push('/admin');
    
  })
  const [showmsg, setShowMsg] = useState(true);

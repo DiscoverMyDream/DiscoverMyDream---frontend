@@ -39,7 +39,7 @@ const UserListPage = ({ history }) => {
 
   return (
     <>
-    <Header auth={auth} logoutUser={dispatch(logoutUser)}/>
+    <Header auth={auth} logoutUser={logoutUser}/>
     <Link to="/admin" className="btn btn-info my-3">
         Go to Dashboard
       </Link>
