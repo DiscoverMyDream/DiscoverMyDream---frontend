@@ -12,6 +12,8 @@ import UserListPage from "./UserListPage";
 import UserEditPage from "./UserEditPage";
 import CollegeListPage from "./CollegeListPage";
 import CollegeEditPage from "./CollegeEditPage";
+import CollegeCreatePage from "./CollegeCreatePage";
+import AdminComponent from "./AdminComponent";
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import{getMainsPrediction,getAdvancedPrediction,getSatCollegePrediction,registerUser,loginUser,fetchSCollege,updateSCollege,deleteSCollege,postSCollege,logoutUser, convertGrade} from '../redux/actionCreators';
@@ -47,6 +49,7 @@ const mapStateToProps = (state) => {
 }
 
 const MainComponent = (props) => {
+    console.log(props.auth.isAdmin)
     useEffect( ()=>{
         console.log(props.auth)
         props.fetchSCollege();
@@ -79,9 +82,14 @@ const MainComponent = (props) => {
             <Footer/>
             </Route>
             <Route exact path="/colleges/:id" component={CollegePage} />
-            
+            <Route path="/search/:keyword" exact >
+            <Header auth={props.auth} logoutUser={props.logoutUser}/>
+                     <CollegeScreen/>
+                
+                    <Footer/>
+            </Route>
           
-            {/*<RouteGuard
+            <RouteGuard
                         exact
                         path='/admin'
                         isAuthenticated={props.auth.isAuthenticated}
@@ -89,7 +97,7 @@ const MainComponent = (props) => {
                         redPath='/adminLogin'
                         component={AdminComponent}
                         />
-            */}
+            
                       <RouteGuard exact path="/admin/userlist" 
                       isAuthenticated={props.auth.isAuthenticated}
                         isAdmin={props.auth.isAdmin}
@@ -99,15 +107,21 @@ const MainComponent = (props) => {
                         isAuthenticated={props.auth.isAuthenticated}
                         isAdmin={props.auth.isAdmin}
                         redPath='/adminLogin' component={UserEditPage} />
-                    <Route exact path="/admin/collegelist" 
-                    /*isAuthenticated={props.auth.isAuthenticated}
-                        isAdmin={props.auth.isAdmin}*/
-                        redPath='/adminLogin' component={CollegeListPage} exact/>
+                    <RouteGuard exact path="/admin/collegelist" 
+                    isAuthenticated={props.auth.isAuthenticated}
+                        isAdmin={props.auth.isAdmin}
+                        redPath='/adminLogin' component={CollegeListPage}/>
+
 
                     <RouteGuard exact path="/admin/collegelist/:pageNumber" 
                     isAuthenticated={props.auth.isAuthenticated}
                         isAdmin={props.auth.isAdmin}
                         redPath='/adminLogin' component={CollegeListPage} exact/>
+
+                <RouteGuard exact path="/admin/college/add" 
+                    isAuthenticated={props.auth.isAuthenticated}
+                        isAdmin={props.auth.isAdmin}
+                        redPath='/adminLogin' component={CollegeCreatePage}/>
 
                     <RouteGuard exact path="/admin/college/:id/edit" 
                     isAuthenticated={props.auth.isAuthenticated}

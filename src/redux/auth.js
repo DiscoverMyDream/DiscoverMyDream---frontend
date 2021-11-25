@@ -6,7 +6,7 @@ export const Auth = (state = {
     token: localStorage.getItem('token'),
     user: localStorage.getItem('creds') ? JSON.parse(localStorage.getItem('creds')) : null,
     errMess: null,
-    isAdmin: false
+    isAdmin: localStorage.getItem('isAdmin') ? true : false
 }, action) => {
     switch (action.type) {
         case ActionTypes.LOGIN_REQUEST:
@@ -19,7 +19,7 @@ export const Auth = (state = {
                 user: action.creds
             };
         case ActionTypes.LOGIN_SUCCESS:
-            console.log("success");
+            console.log("hi",state.isAdmin);
             return {
                 ...state,
                 isLoading: false,

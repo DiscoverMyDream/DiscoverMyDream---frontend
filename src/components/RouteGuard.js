@@ -12,6 +12,7 @@ const RouteGuard = ({
     {...rest}
     render={(props) => (
       <>
+      {console.log(isAdmin)}
         {(isAuthenticated && isAdmin) ? (
           <Component {...props} />
         ) : (

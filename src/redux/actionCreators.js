@@ -403,7 +403,8 @@ export const listColleges = (keyword = '', pageNumber = '') => async (dispatch) 
     }
   }; 
 
-  export const createCollege = () => async (dispatch) => {
+  export const createCollege = (college) => async (dispatch) => {
+    console.log(college)
     try {
       dispatch({
         type: ActionTypes.COLLEGE_CREATE_REQUEST,
@@ -418,7 +419,7 @@ export const listColleges = (keyword = '', pageNumber = '') => async (dispatch) 
         },
       };
   
-      const { data } = await axios.post(baseUrl+`/api/colleges`, {}, config);
+      const { data } = await axios.post(baseUrl+`/api/colleges`, college, config);
   
       dispatch({
         type: ActionTypes.COLLEGE_CREATE_SUCCESS,
@@ -572,6 +573,7 @@ export const requestLogin = (creds) => {
 }
 
 export const receiveLogin = (response) => {
+  console.log(response);
     return {
         type: ActionTypes.LOGIN_SUCCESS,
         token: response.token,

@@ -83,7 +83,7 @@ const RankPredictForm = (props) => {
 <>
 
         <div className='container-fluid' style={{padding:0}}>
-            <div className='container-fluid' style={{backgroundImage:"url('assets/images/header.png')",backgroundPosition: 'center',
+            <div className='container-fluid' style={{backgroundImage:"url('/assets/images/header.png')",backgroundPosition: 'center',
         backgroundSize: 'cover',backgroundRepeat: 'no-repeat'}}>
             <NavDash auth={props.auth} logoutUser={props.logoutUser}/>
             </div>

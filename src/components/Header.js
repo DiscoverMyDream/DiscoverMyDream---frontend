@@ -9,7 +9,7 @@ const Header = (props) => {
     }
     );
     return (
-        <div className='container-fluid' style={{backgroundImage:"url('assets/images/header.png')",backgroundPosition: 'center',
+        <div className='container-fluid' style={{backgroundImage:"url('/assets/images/header.png')",backgroundPosition: 'center',
         backgroundSize: 'cover',backgroundRepeat: 'no-repeat'}}>
             <NavComp auth={props.auth} logoutUser={props.logoutUser}/>
             <Jumbotron style={{paddingTop:'5vh',paddingBottom:'20vh'}}>

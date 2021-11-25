@@ -6,13 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import Message from "./Message";
 import Loader from "./Loader";
 import FormContainer from "./FormContainer";
-import { listCollegeDetails, updateCollege,logoutUser  } from "../redux/actionCreators";
-import {  COLLEGE_UPDATE_RESET} from "../redux/actionTypes";
+import { listCollegeDetails, createCollege,logoutUser  } from "../redux/actionCreators";
+import {  COLLEGE_CREATE_RESET} from "../redux/actionTypes";
 import Header from "./Header";
 import Footer from "./Footer";
 
 
-const CollegeEditPage = ({ match, history }) => {
+const CollegeCreatePage = ({ match, history }) => {
   const collegeId = match.params.id;
 
   const [name, setName] = useState("");
@@ -29,32 +29,19 @@ const CollegeEditPage = ({ match, history }) => {
 
   const auth = useSelector((state) => state.auth);
 
-  const collegeDetails = useSelector((state) => state.collegeDetails);
-  const { loading, error, college } = collegeDetails;
-
-  const collegeUpdate = useSelector((state) => state.collegeUpdate);
+  const collegeCreate = useSelector((state) => state.collegeCreate);
   const {
-    loading: loadingUpdate,
-    error: errorUpdate,
-    success: successUpdate,
-  } = collegeUpdate;
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+  } = collegeCreate;
 
   useEffect(() => {
-    if (successUpdate) {
-      dispatch({ type: COLLEGE_UPDATE_RESET });
+    if (successCreate) {
+      dispatch({ type: COLLEGE_CREATE_RESET });
       history.push("/admin/collegelist");
-    } else {
-      if (!college || college._id !== collegeId) {
-        dispatch(listCollegeDetails(collegeId));
-      } else {
-        setName(college.name);
-        setImage(college.image);
-        setDescription(college.description);
-        setLink(college.collegelink)
-        setDataset(college.dataset)
-      }
-    }
-  }, [dispatch, history, collegeId, college, successUpdate]);
+    } 
+  }, [dispatch , successCreate]);
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
@@ -81,14 +68,18 @@ const CollegeEditPage = ({ match, history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    console.log(name,
+      image,
+      description,
+      collegelink,
+      dataset)
     dispatch(
-      updateCollege({
-        _id: collegeId,
-        name,
-        image,
-        description,
-        collegelink,
-        dataset
+      createCollege({
+         name:name,
+        image:image,
+        description:description,
+        collegelink:collegelink,
+        dataset:dataset
         
       })
     );
@@ -101,14 +92,10 @@ const CollegeEditPage = ({ match, history }) => {
         Go Back
       </Link>
       <FormContainer>
-        <h1>Edit college</h1>
-        {loadingUpdate && <Loader />}
-        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
-        {loading ? (
-          <Loader />
-        ) : error ? (
-          <Message variant="danger">{error}</Message>
-        ) : (
+        <h1>Create college</h1>
+        {loadingCreate && <Loader />}
+        {errorCreate && <Message variant="danger">{errorCreate}</Message>}
+        
           <Form onSubmit={submitHandler}>
             <Form.Group controlId="name">
               <Form.Label>Name</Form.Label>
@@ -168,14 +155,14 @@ const CollegeEditPage = ({ match, history }) => {
             </Form.Group>
 
             <Button type="submit" variant="primary">
-              Update
+              Create
             </Button>
           </Form>
-        )}
+        
       </FormContainer>
       <Footer/>
     </>
   );
 };
 
-export default CollegeEditPage;
+export default CollegeCreatePage;

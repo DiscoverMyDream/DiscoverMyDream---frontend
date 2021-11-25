@@ -1,11 +1,12 @@
 import React, {  useEffect } from 'react'
-import {Link} from 'react-router-dom'
+import {Link,Route} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {Row, Col} from 'react-bootstrap'
 import College from './College'
 import Message from './Message'
 import Loader from './Loader'
 import Paginate from './Paginate'
+import SearchBox from './SearchBox'
 //import { listProducts } from '../actions/productActions'
 //import ProductCarousel from '../components/ProductCarousel'
 import Meta from './Meta'
@@ -13,9 +14,9 @@ import Meta from './Meta'
 
 const CollegeScreen = ({ match }) => {
 
-   // const keyword = match.params.keyword
+   //const keyword = match?match.params.keyword:''
 
-   // const pageNumber = match.params.pageNumber || 1
+   //const pageNumber = match?match.params.pageNumber:'' || 1
     
     
     const dispatch = useDispatch()
@@ -50,6 +51,11 @@ const CollegeScreen = ({ match }) => {
               <Message variant='danger'>error</Message>
           ) : ( 
               <>
+              {/*<Row>
+                <Col md={6} style={{margin:'auto'}}>
+              <Route render={({history}) => <SearchBox history={history}/>} />
+              </Col>
+              </Row>*/}
          <Row>
              {clgs.map((clg) => (
                 <Col key={clg._id} sm ={12} md={6} lg={4} xl={3}>
