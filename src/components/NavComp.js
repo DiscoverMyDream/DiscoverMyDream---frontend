@@ -1,13 +1,14 @@
 import React, {useState} from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink} from 'reactstrap';
 import { useDispatch, useSelector } from "react-redux";
+import {logoutUser  } from "../redux/actionCreators";
 const NavComp = (props) => {
   
     const [collapsed, setCollapsed] = useState(true);
   const dispatch = useDispatch();
     const toggleNavbar = () => setCollapsed(!collapsed);
     const handleLogoutClick = () => {
-      dispatch(props.logoutUser());
+      dispatch(logoutUser());
     }
     return (
         
