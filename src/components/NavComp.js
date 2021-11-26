@@ -36,6 +36,10 @@ const NavComp = (props) => {
             <NavItem>
               <NavLink style={{color:'#FEFAFA',paddingRight:'5.5vw'}}  href="/home">Home</NavLink>
             </NavItem>
+            {props.auth.isAdmin? 
+            <NavItem>
+              <NavLink style={{color:'#FEFAFA',paddingRight:'5.5vw'}}  href="/admin">Dashboard</NavLink>
+            </NavItem>:null}
             <NavItem>
               <NavLink style={{color:'#FEFAFA',paddingRight:'5.5vw'}}  href="/colleges">Colleges</NavLink>
             </NavItem>
