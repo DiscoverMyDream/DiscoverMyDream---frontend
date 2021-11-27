@@ -22,6 +22,8 @@ import  RouteGuard from './RouteGuard'
 import CollegePage from './CollegePage';
 import CollegeScreen from './CollegeScreen';
 
+import ChatDisplay from './ChatDisplay';
+
 const mapDispatchToProps = (dispatch) => ({
 
     getMainsPrediction: (info) => dispatch(getMainsPrediction(info)),
@@ -68,7 +70,9 @@ const MainComponent = (props) => {
                      <LandingPage />
                 
                     <Footer/>
+                    
                     </Route>
+                    
                     <Route exact path='/colleges'>
                     <Header auth={props.auth} logoutUser={props.logoutUser}/>
                      <CollegeScreen/>
@@ -162,6 +166,7 @@ const MainComponent = (props) => {
                         />
                         <Redirect to="/home" />
             </Switch>
+            <ChatDisplay/>
         </div>
     );
 };
