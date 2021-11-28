@@ -128,9 +128,7 @@ const history= useHistory();
   return (
     <>
     <Header auth={auth} logoutUser={dispatch(logoutUser)}/>
-      <Link className="btn btn-light my-3" to="/colleges">
-        Go Back
-    </Link>
+      
       {/*loading ? (
         <Loader />
       ) : error ? (
@@ -138,26 +136,29 @@ const history= useHistory();
       ) : */(
         <>
         <Container>
-        <Row >
-          
-          <Col md={4} className="mx-auto">
+        <Row style={{paddingTop:'7vh', paddingBottom:'7vh'}}>
+        <Meta title={college.name}/>
+          <Col md={6}>
             <Image src={college.image} alt={college.name} fluid />
           </Col>
-          </Row>
-          <Row>
-          <Col md={5} className="mx-auto">
+          <Col md={6}>
             <ListGroup variant="flush">
               <ListGroup.Item>
                 <h3>{college.name}</h3>
               </ListGroup.Item>
+              
+             
+              
               <ListGroup.Item>
                 <h5> Description:</h5> {college.description}
               </ListGroup.Item>
               <ListGroup.Item>
-                <h5> Official Site:</h5> <a href={college.collegelink}>{college.collegelink}</a>
+                <h5> Official Website:</h5><a href={college.collegelink}>{college.collegelink}</a>
               </ListGroup.Item>
             </ListGroup>
           </Col>
+          
+          
         </Row>
         </Container>
         <Footer/>

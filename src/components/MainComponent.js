@@ -60,7 +60,7 @@ const MainComponent = (props) => {
     },[]
     );
     return (
-        <div className="container-full-bg">
+        <div className="container-full-bg" >
             <Switch>
                     <Route exact path="/">
                         <Redirect to="/home" />

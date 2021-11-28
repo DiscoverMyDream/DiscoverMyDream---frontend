@@ -7,55 +7,63 @@
   max-height: 800px;
   width: 350px;
   max-width: 600px;
-  background-color: #eee;
+  background-color: rgb(255, 255, 255);
   display: grid;
   grid-template-rows: 40px auto;
   bottom: 70px;
   right: 30px;
+  border-radius: 10px;
 }
 
 .college-theme h1{
   font-family: 'Pacifico', cursive;
-  color: orange;
-  background: blue;
+  color: rgb(0, 46, 103);
   margin: 0;
   height: 40px;
   font-size: 20px;
+  background: var(--primaryGradient);
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
+  padding: 15px 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  box-shadow: var(--primaryBoxShadow)
 }
 
 .chats-container {
   position: relative;
+
   overflow-y: scroll;
+  flex-direction: column-reverse;
 }
 
 .college-theme .chats {
   position: absolute;
   box-sizing: border-box;
-  padding: 0 20px;
+  padding: 0 10px;
   margin: 10px 0 0;
   width: 100%;
   height: auto;
 }
 
 .college-theme .chats .chat {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(189, 189, 189, 0.8);
   position: relative;
-  padding: 5px 13px;
+  padding: 2px 7px;
   font-size: 14px;
   border-radius: 10px;
   list-style: none;
-  margin: 10px 0;
-  max-width: 85%;
+  margin: 5px 0;
+  max-width: 75%;
   overflow-wrap: break-word;
 }
 
 .college-theme .message-area {
   height: 100%;
   display: grid;
-  grid-template-rows: auto 40px;
+  grid-template-rows: auto 30px;
 }
 
 .college-theme .chats .chat.right{
@@ -69,15 +77,18 @@
 .college-theme .input{
   height: 40px;
   width: 100%;
-  background: rgba(30, 228, 148, 0.7);
+  background: var(--primaryGradient);
+  border-radius: 10px;
   display: grid;
   grid-template-columns: auto 70px;
+
 }
 
 .college-theme .input input[type="text"]{
   background: rgba(255, 255, 255, 0.5);
   outline: 0;
-  border: 2px solid #1EE494;
+  border: 2px solid #0e0075;
+  border-radius: 10px;
   padding: 0 5px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -89,21 +100,16 @@
 }
 
 .college-theme .input input[type="submit"]{
+  padding: 6px;
   background: transparent;
-  border: 1px solid #1EE494;
-  height: 30px;
-  margin: auto auto auto 0;
-  width: auto;
-  font-size: 14px;
-  box-sizing: border-box;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;	
+  border: none;
+  outline: none;
+  cursor: pointer;	
 }
 
 .college-theme .input input[type="submit"]:hover {
-  background: #1EE494;
+  background: #0074c7;
+  border-radius: 10px;
   color: #FFF;	
 }
 
@@ -114,6 +120,7 @@ table {
   text-align: left;
   color: #3f3f3f;
   border-collapse: collapse;
+  border-radius: 10px;
   border: 1px solid #e8e8e8
 }
 

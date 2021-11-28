@@ -11,14 +11,15 @@ const NavDash = (props) => {
     return (
         
         <div>
+          
           <Navbar light expand='lg' >
         
         <NavbarBrand  href="/" className="mr-auto" >
         
           
     <div className='col-sm-2'>
-            <img src='/assets/images/mylogo.png' height='50vh' width='50vh' 
-              style={{float:'left',maxHeight:'100%',width:'14vw',height:'12vw'}} /> 
+            <img src='/assets/images/mylogo.png' height='10vh' width='10vh' 
+              style={{float:'left',maxHeight:'50%',width:'7vw',height:'6vw'}} /> 
               </div>
               
 
@@ -27,12 +28,12 @@ const NavDash = (props) => {
         
         <NavbarToggler  onClick={toggleNavbar} className="me-0"/>
         <Collapse  isOpen={!collapsed} navbar className='mr-0'>
-          <Nav className='col-sm-12 justify-content-end' navbar style={{fontFamily:'Andada Pro', fontSize:'2.35rem',alignContent:'space-between',verticalAlign:'top'}} >
+          <Nav className='col-sm-12 justify-content-end' navbar style={{fontFamily:'Andada Pro', fontSize:'1.35rem',alignContent:'space-between',verticalAlign:'top'}} >
             <NavItem>
-              <NavLink style={{color:'#FEFAFA',paddingRight:'5.5vw'}}  href="/home">Home</NavLink>
+              <NavLink style={{color:'#FEFAFA',paddingRight:'3.5vw'}}  href="/home">Home</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink style={{color:'#FEFAFA',paddingRight:'5.5vw'}}  href="/colleges">Colleges</NavLink>
+              <NavLink style={{color:'#FEFAFA',paddingRight:'3.5vw'}}  href="/colleges">Colleges</NavLink>
             </NavItem>
             
             <NavItem>

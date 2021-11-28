@@ -1,20 +1,54 @@
 import React from 'react'
+import { Container, Row, Col} from 'react-bootstrap'
 
-function Footer() {
+
+const Footer = () => {
     return (
-        <footer className="container-fluid mt-auto wrapper flex-grow-1 justify-content-center" id="footer" style={{backgroundColor:'#0A2648',fontSize:'30px'}} >
-            <div className="row ">
-                <div className="row mr-auto ml-auto " style={{display:'flex',flexDirection:'column',fontFamily:'Andada Pro'}}>
-
-                    <a href="mailto:discovermydream1234@gmail.com" style={{color:'white'}} target="_blank" rel="noopener noreferrer">Contact Us</a>
-
-                    <a href="" style={{color:'white'}} target="_blank" rel="noopener noreferrer">Meet the Developers</a>
-
-                </div>
+        <div className='main-footer' style={{backgroundColor:'#0A2648', paddingTop:'2vh'}}>
+        <div className='footer-middle'>
+        <div className='container'>
+        <div className='row'>
+            {}
+            <div className='col-md-4 col-sm-4' style={{color:'white'}}>
+                <h4 className='fh'>Contact Us</h4>
+                <ul className='list-unstyled'>
+                    <li><i className="fas fa-envelope"></i> discovermydream1234@gmail.com</li>
+                    <li><i className="fas fa-phone-alt"></i> +91 9876226982</li>
+                    <li><i className="fas fa-phone-alt"></i> +91 8427066452</li>
+                </ul>
             </div>
-            <p className="col-12 copyright" style={{color:'white',fontFamily:'Andada Pro'}}>Copyright © 2021</p>
-        </footer>
+            {}
+            <div className='col-md-4 col-sm-4' style={{color:'white'}}>
+                <h4 className='fh'>Social Media</h4>
+                <ul className='list-unstyled'>
+                <li><i className="fab fa-twitter"></i> Twitter</li>
+                    <li><i className="fab fa-instagram"></i> Instagram</li>
+                    <li><i className="fab fa-facebook"></i> Facebook</li>
+                </ul>
+            </div> 
+            {}
+            <div className='col-md-4 col-sm-4' style={{color:'white'}} >
+                <h4 className='fh'>Company</h4>
+                <ul className='list-unstyled'>
+                    <li>Author Services</li>
+                    <li>Accessibility Statement</li>
+                    <li>About</li>
+                </ul>
+            </div>
+        </div>
+        {/*Footer Bottom*/}
+        <div className='footer-bottom'>
+            <p className='text-xs-center' style={{color:'white'}}>
+               <h5 className='tradem'> Created by Milind Saini | Dhruv Chopra | Tanveer Sodhi | Ayush Kumar</h5> 
+               <Col className='text-center py-3'>Copyright &copy; DiscoverMyDream</Col>
+            </p>
+        </div>
+        </div>
+        </div>   
+        </div>
     )
+    
 }
 
 export default Footer;
+
