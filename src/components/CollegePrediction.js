@@ -180,7 +180,7 @@ if (clgLink){
      
         <div className='container-fluid' style={{padding:0}}>
         <div className='container-fluid' style={{backgroundImage:"url('assets/images/header.png')",backgroundPosition: 'center',
-    backgroundSize: 'cover',backgroundRepeat: 'no-repeat'}}>
+    backgroundSize: 'cover',backgroundRepeat: 'no-repeat',padding:0}}>
         <NavDash auth={props.auth} logoutUser={props.logoutUser}/>
         </div>
          <Jumbotron style={{paddingTop:'5vh',paddingBottom:'5vh'}}>

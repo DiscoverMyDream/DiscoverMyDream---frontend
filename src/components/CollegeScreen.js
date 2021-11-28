@@ -56,7 +56,7 @@ const CollegeScreen = ({ match }) => {
               <Route render={({history}) => <SearchBox history={history}/>} />
               </Col>
               </Row>*/}
-         <Row style={{paddingTop:'7vh', paddingBottom:'7vh'}}>
+         <Row style={{padding:'7vh'}}>
              {clgs.map((clg) => (
                 <Col key={clg._id} sm ={12} md={6} lg={4} xl={3} style= {{paddingTop:'3vh'}}>
                     <College college={clg} />
