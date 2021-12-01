@@ -41,7 +41,7 @@ const CollegeCarousel = () => {
       {clgs.map((clg) => (
         <Carousel.Item key={clg._id}>
           <Link to={`/colleges/${clg._id}`}>
-            <Image src={clg.image} alt={clg.name} fluid />
+            <Image src={clg.image} alt={clg.name} fluid style={{height:'30vw'}} />
             <Carousel.Caption className="carousel-caption">
               <h2 className="carousel-text">{clg.name}</h2>
             </Carousel.Caption>
