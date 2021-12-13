@@ -19,7 +19,7 @@ const UserEditPage = ({ match, history }) => {
 
   const dispatch = useDispatch();
 
-  const userDetails = useSelector((state) => state.auth);
+  const userDetails = useSelector((state) => state.userDetails);
   const { isLoading, errMess, user } = userDetails;
 
   const userUpdate = useSelector((state) => state.userUpdate);
@@ -34,6 +34,7 @@ const UserEditPage = ({ match, history }) => {
       dispatch({ type: USER_UPDATE_RESET });
       history.push("/admin/userlist");
     } else {
+      console.log(user)
       if (!user || user._id !== userId) {
         dispatch(getUserDetails(userId));
       } else {
